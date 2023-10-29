@@ -1,7 +1,7 @@
 import { Input } from "./Input";
 import { useState } from "react";
 import { MAX_DAY_IN_MONTH } from "../utils/constant";
-import { currDay, currMonth, currYear } from "../utils/todayDates";
+import { currDate, currDay, currMonth, currYear } from "../utils/todayDates";
 
 export default function Form() {
   const [day, setDay] = useState(0);
@@ -59,14 +59,13 @@ export default function Form() {
     currMonth === month && currDay === day;
 
   const computeDaysToBirthday = () => {
-    const now = new Date();
-    let yearToUse = now.getFullYear();
+    let yearToUse = currDate.getFullYear();
     if (currMonth > month || (currMonth === month && currDay > day)) {
-      yearToUse = yearToUse + 1;
+      yearToUse++;
     }
     const birthday = new Date(yearToUse, month - 1, day);
     const totalDays = Math.ceil(
-      (birthday.getTime() - now.getTime()) / (1000 * 3600 * 24)
+      (birthday.getTime() - currDate.getTime()) / (1000 * 3600 * 24)
     );
 
     setDaysToBirthday(totalDays);
