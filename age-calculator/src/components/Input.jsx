@@ -1,8 +1,5 @@
 import PropTypes from "prop-types";
 
-// Remove this line since PropTypes has already been imported above
-// import PropTypes from 'prop-types';
-
 export const Input = ({ label, type, id, placeholder, onChangeFn }) => {
   Input.propTypes = {
     label: PropTypes.string.isRequired,
