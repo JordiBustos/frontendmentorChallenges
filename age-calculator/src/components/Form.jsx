@@ -11,6 +11,7 @@ export default function Form() {
   const [err, setErr] = useState("");
   const [unit, setUnit] = useState("years");
   const [isBirthday, setIsBirthday] = useState(false);
+  const [daysToBirthday, setDaysToBirthday] = useState(0);
 
   const handleSubmit = () => {
     setDatesInNumber(day, month, year);
@@ -29,6 +30,7 @@ export default function Form() {
     );
 
     setErr(err);
+    if (!isBirthday && !err) computeDaysToBirthday();
     setAnswer(answer);
   };
 
@@ -55,6 +57,20 @@ export default function Form() {
 
   const checkIfBirthday = (currMonth, currDay) =>
     currMonth === month && currDay === day;
+
+  const computeDaysToBirthday = () => {
+    const now = new Date();
+    let yearToUse = now.getFullYear();
+    if (currMonth > month || (currMonth === month && currDay > day)) {
+      yearToUse = yearToUse + 1;
+    }
+    const birthday = new Date(yearToUse, month - 1, day);
+    const totalDays = Math.ceil(
+      (birthday.getTime() - now.getTime()) / (1000 * 3600 * 24)
+    );
+
+    setDaysToBirthday(totalDays);
+  };
 
   const setDatesInNumber = (day, month, year) => {
     setDay(Number(day));
@@ -132,6 +148,9 @@ export default function Form() {
           </p>
         )}
         {isBirthday && <p>Happy Birthday!</p>}
+        {daysToBirthday > 0 && !isBirthday && (
+          <p>Only {daysToBirthday} days to your birthday!</p>
+        )}
       </div>
     </div>
   );
