@@ -1,6 +1,6 @@
 import Counter from "../Counter";
-import User from "../User/User";
-import Replies from "../Replies/Replies";
+import User from "../../User/User";
+import Replies from "../../Replies/Replies";
 
 import PropTypes from "prop-types";
 import "./comment.css";
