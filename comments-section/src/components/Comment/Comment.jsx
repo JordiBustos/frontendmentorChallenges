@@ -22,7 +22,7 @@ const Comment = ({ comment }) => {
   };
 
   return (
-    <article>
+    <article className="comment-container">
       <div className='comment-box'>
         <Counter upvotes={comment.upvotes} />
         <div className="comment-box--user">

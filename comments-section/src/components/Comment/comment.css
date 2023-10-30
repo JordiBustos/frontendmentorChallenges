@@ -1,3 +1,7 @@
+.comment-container {
+  width:100%;
+}
+
 .comment-box {
   background-color: white;
   border-radius: 10px;
@@ -39,4 +43,5 @@
 
 .reply-button {
   align-self: start;
+  margin-left: auto;
 }
