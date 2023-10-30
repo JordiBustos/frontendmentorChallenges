@@ -1,5 +1,5 @@
 import './App.css'
-import Comments from './components/Comments'
+import Comments from './components/Comments/Comments'
 import comments from "../mock-data/comments";
 
 

@@ -2,13 +2,7 @@ import PropTypes from "prop-types";
 import Reply from "./Reply/Reply";
 import "./replies.css";
 
-
-
 const Replies = ({ replies }) => {
-  Replies.propTypes = {
-    replies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  };
-
   return (
     <div className="replies">
       <div className="line-container">
@@ -21,6 +15,10 @@ const Replies = ({ replies }) => {
       </div>
     </div>
   );
+};
+
+Replies.propTypes = {
+  replies: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Replies;

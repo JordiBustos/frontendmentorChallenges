@@ -1,7 +1,7 @@
 .replies {
   display: flex;
   flex-direction: row;
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
 }
 
 .replies-container {
@@ -16,7 +16,7 @@
   background-color: rgba(95, 95, 95, 0.1);
   display: block;
   margin: 0 auto;
-  height:100%;
+  height: 100%;
 }
 
 .line-container {

@@ -2,10 +2,6 @@ import Comment from "./Comment/Comment";
 import PropTypes from "prop-types";
 
 const Comments = ({ comments }) => {
-  Comments.propTypes = {
-    comments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  };
-
   return (
     <div>
       {comments.map((comment) => (
@@ -13,6 +9,10 @@ const Comments = ({ comments }) => {
       ))}
     </div>
   );
+};
+
+Comments.propTypes = {
+  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Comments;

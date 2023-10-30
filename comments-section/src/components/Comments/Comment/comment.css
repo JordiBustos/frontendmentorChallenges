@@ -1,5 +1,13 @@
 .comment-container {
-  width:100%;
+  width: 100%;
+}
+
+.comment-box,
+.comment-box--user_date,
+.reply-button {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 .comment-box {
@@ -7,21 +15,17 @@
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
-
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
 }
 
 .comment-box h3 {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
-.comment-box p {
-  font-family: 'Rubik', sans-serif;
+.comment-box--text {
+  font-family: "Rubik", sans-serif;
   font-size: 16px;
   font-weight: 400;
   margin-bottom: 10px;
@@ -29,7 +33,7 @@
 }
 
 .comment-box span {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: hsl(238, 40%, 52%);
@@ -41,7 +45,23 @@
   gap: 1rem;
 }
 
+.comment-box--user_date {
+  align-items: center;
+}
+
 .reply-button {
   align-self: start;
   margin-left: auto;
+  color: hsl(238, 40%, 52%);
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  align-items: center;
+}
+
+.reply-button img {
+  width: 15px;
+  height: 15px;
 }

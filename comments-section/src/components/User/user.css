@@ -1,11 +1,28 @@
 .user {
   display: flex;
   flex-direction: row;
-  gap: .8rem;
+  gap: 0.8rem;
 }
 
 .user img {
-  width:3rem;
+  width: 3rem;
   height: 3rem;
   border-radius: 50%;
+}
+
+.user--username {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.user--current {
+  background-color: hsl(238, 40%, 52%);
+  color: white;
+  font-size: 0.8rem;
+  width: 50%;
+  padding: 0.1rem 0.5rem;
+  font-weight: bold;
+  border-radius: 2px;
 }

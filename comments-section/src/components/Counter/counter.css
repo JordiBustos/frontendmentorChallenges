@@ -1,0 +1,23 @@
+.counter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 1rem 0;
+  background-color: hsl(228, 33%, 97%);
+  padding: 0.6rem;
+  border-radius: 10px;
+}
+
+.counter-container button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: hsl(239, 57%, 85%);
+}
+
+.upvotes {
+  font-weight: bold;
+  color: hsl(238, 40%, 52%);
+}
