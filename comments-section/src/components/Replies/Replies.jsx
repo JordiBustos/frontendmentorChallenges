@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Reply from "../Reply/Reply";
+import Reply from "./Reply/Reply";
 import "./replies.css";
 
 
