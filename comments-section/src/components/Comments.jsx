@@ -1,4 +1,4 @@
-import Comment from "./Comment";
+import Comment from "./Comment/Comment";
 import PropTypes from "prop-types";
 
 const Comments = ({ comments }) => {

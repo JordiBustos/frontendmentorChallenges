@@ -1,0 +1,11 @@
+.user {
+  display: flex;
+  flex-direction: row;
+  gap: .8rem;
+}
+
+.user img {
+  width:3rem;
+  height: 3rem;
+  border-radius: 50%;
+}

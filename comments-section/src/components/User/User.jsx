@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import "./user.css";
 
 const User = ({ user }) => {
   User.propTypes = {

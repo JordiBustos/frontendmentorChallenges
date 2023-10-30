@@ -11,7 +11,22 @@ export default {0: [
       },
       "username": "amyrobson"
     },
-    "replies": []
+    "replies": [
+      {
+        "id": 5,
+        "content": "Nice!",
+        "createdAt": "1 week ago",
+        "upvotes": 0,
+        "replyingTo": "maxblagun",
+        "user": {
+          "image": { 
+            "png": "/avatars/image-ramsesmiron.png",
+            "webp": "/avatars/image-ramsesmiron.webp"
+          },
+          "username": "ramsesmiron"
+        }
+      },
+    ]
   },
   {
     "id": 2,

@@ -1,0 +1,24 @@
+.replies {
+  display: flex;
+  flex-direction: row;
+  margin-bottom:1rem;
+}
+
+.replies-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-basis: 90%;
+}
+
+.replies-line {
+  width: 2px;
+  background-color: rgba(95, 95, 95, 0.1);
+  display: block;
+  margin: 0 auto;
+  height:100%;
+}
+
+.line-container {
+  flex-basis: 10%;
+}
