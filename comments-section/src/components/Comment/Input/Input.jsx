@@ -38,8 +38,13 @@ const Input = ({ updateComments, isReply, commentId }) => {
     return [...prevComments];
   };
 
+  const containerClasses = [
+    "input-container",
+    commentId === null ? "comment-input" : "reply-input",
+  ].join(" ");
+
   return (
-    <section className="input-container">
+    <section className={containerClasses}>
       <div>
         <img src={currentUser.image.webp} alt={currentUser.username} />
       </div>

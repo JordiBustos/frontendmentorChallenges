@@ -7,7 +7,7 @@ import currentUser from "../../../mock-data/curr-user";
 import { useState } from "react";
 import Input from "./Input/Input";
 import Modal from "../Modal/Modal";
-import Edit from "./Edit";
+import Edit from "./Edit/Edit";
 import Button from "../Button/Button";
 import ModalContent from "./ModalContent";
 
@@ -52,15 +52,52 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
         <Counter upvotes={comment.upvotes} />
         <div className="comment-box--user">
           <div className="comment-box--user_date">
-            <User
-              user={comment.user}
-              isCurrent={currentUser.username === comment.user.username}
-            />
-            <p>{comment.createdAt}</p>
+            <div className="user-date-container">
+              <User
+                user={comment.user}
+                isCurrent={currentUser.username === comment.user.username}
+                createdAt={comment.createdAt}
+              />
+              <p>{comment.createdAt}</p>
+            </div>
+            {comment.user.username === currentUser.username ? (
+              <div className="comment-buttons-container">
+                <Button onClick={openModal} className="delete-button">
+                  <img
+                    src="/icon-delete.svg"
+                    alt="delete"
+                    className="delete-icon"
+                  />
+                  Delete
+                </Button>
+                <Button
+                  className="edit-button"
+                  onClick={() => setIsBeingEdited(true)}
+                >
+                  <img src="/icon-edit.svg" alt="edit" className="edit-icon" />
+                  Edit
+                </Button>
+                <Modal isOpen={isModalOpen} onClose={closeModal}>
+                  <ModalContent
+                    closeModal={closeModal}
+                    handleDelete={handleDelete}
+                    title={"Delete Comment"}
+                    paragraph={"Are you sure?"}
+                    confirm={"YES, DELETE"}
+                    cancel={"NO, CANCEL"}
+                  />
+                </Modal>
+              </div>
+            ) : (
+              <Button className="reply-button" onClick={handleReply}>
+                <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
+                Reply
+              </Button>
+            )}
           </div>
-          <p className="comment-box--text">
+          <div className="comment-edit-container">
             {!isBeingEdited ? (
-              commentContent
+              <p className="comment-box--text">{commentContent}</p>
             ) : (
               <Edit
                 currentText={commentContent}
@@ -68,43 +105,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
                 setIsBeingEdited={setIsBeingEdited}
               />
             )}
-          </p>
-        </div>
-        <div className="comment-buttons-container">
-          {comment.user.username === currentUser.username ? (
-            <>
-              <Button onClick={openModal} className="delete-button">
-                <img
-                  src="/icon-delete.svg"
-                  alt="delete"
-                  className="delete-icon"
-                />
-                Delete
-              </Button>
-              <Button
-                className="edit-button"
-                onClick={() => setIsBeingEdited(true)}
-              >
-                <img src="/icon-edit.svg" alt="edit" className="edit-icon" />
-                Edit
-              </Button>
-              <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <ModalContent
-                  closeModal={closeModal}
-                  handleDelete={handleDelete}
-                  title={"Delete Comment"}
-                  paragraph={"Are you sure?"}
-                  confirm={"YES, DELETE"}
-                  cancel={"NO, CANCEL"}
-                />
-              </Modal>
-            </>
-          ) : (
-            <Button className="reply-button" onClick={handleReply}>
-              <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
-              Reply
-            </Button>
-          )}
+          </div>
         </div>
       </div>
       {showReplyInput ? (

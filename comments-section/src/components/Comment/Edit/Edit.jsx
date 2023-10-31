@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import "./edit.css";
 
 const Edit = ({ currentText, updateComment, setIsBeingEdited }) => {
   const [tmpText, setTmpText] = useState(currentText);
@@ -13,15 +14,17 @@ const Edit = ({ currentText, updateComment, setIsBeingEdited }) => {
   };
 
   return (
-    <section className="input-container">
+    <section className="edit-container">
       <form>
-        <input
-          className="input-comment"
-          type="text"
-          placeholder="Add a comment..."
+        <textarea
+          placeholder="Update comment..."
           value={tmpText}
           onChange={(event) => setTmpText(event.target.value)}
-        />
+          name="text"
+          rows="2"
+          cols="8"
+          wrap="soft"
+        ></textarea>
         <button onClick={handleSubmit}>UPDATE</button>
       </form>
     </section>
@@ -30,7 +33,6 @@ const Edit = ({ currentText, updateComment, setIsBeingEdited }) => {
 
 Edit.propTypes = {
   currentText: PropTypes.string.isRequired,
-  commentId: PropTypes.number.isRequired,
   updateComment: PropTypes.func.isRequired,
   setIsBeingEdited: PropTypes.func.isRequired,
 };

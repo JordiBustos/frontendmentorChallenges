@@ -50,7 +50,21 @@
 }
 
 .comment-box--user_date {
+  justify-content: space-between;
   align-items: center;
+}
+
+.user-date-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.comment-edit-container {
+  width: 100%;
+  height: 100%;
 }
 
 .comment-buttons-container {
