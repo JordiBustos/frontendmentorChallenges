@@ -8,9 +8,18 @@ const Comments = ({ comments }) => {
   return (
     <div>
       {commentsList.map((comment) => (
-        <Comment comment={comment} key={comment.id} setCommentsList={setCommentsList} isReply={true}/>
+        <Comment
+          comment={comment}
+          key={comment.id}
+          setCommentsList={setCommentsList}
+          isReply={true}
+        />
       ))}
-      <Input updateComments={setCommentsList} isReply={false} commentId={null} />
+      <Input
+        updateComments={setCommentsList}
+        isReply={false}
+        commentId={null}
+      />
     </div>
   );
 };

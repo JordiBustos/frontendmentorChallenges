@@ -11,7 +11,7 @@ const Reply = ({ reply, updateComments }) => {
     <div className={"comment-box reply"}>
       <Comment
         comment={modifiedReply}
-        updateComments={updateComments}
+        setCommentsList={updateComments}
         isReply={true}
       />
     </div>

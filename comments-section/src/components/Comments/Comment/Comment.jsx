@@ -14,6 +14,23 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
     setShowReplyInput(!showReplyInput);
   };
 
+  const handleDelete = () => {
+    setCommentsList((prev) => {
+      if (comment.replyId) {
+        return prev.map((com) => {
+          if (com.id === comment.replyId) {
+            return {
+              ...com,
+              replies: com.replies.filter((rep) => rep.id !== comment.id),
+            };
+          }
+          return com;
+        });
+      }
+      return prev.filter((com) => com.id !== comment.id);
+    });
+  };
+
   return (
     <article className="comment-container">
       <div className="comment-box">
@@ -28,10 +45,22 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
           </div>
           <p className="comment-box--text">{comment.content}</p>
         </div>
-        <button className="reply-button" onClick={handleReply}>
-          <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
-          Reply
-        </button>
+        <div className="comment-buttons-container">
+          {comment.user.username === currentUser.username ? (
+            <button className="delete-button" onClick={handleDelete}>
+              <img
+                src="/icon-delete.svg"
+                alt="delete"
+                className="delete-icon"
+              />
+              Delete
+            </button>
+          ) : null}
+          <button className="reply-button" onClick={handleReply}>
+            <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
+            Reply
+          </button>
+        </div>
       </div>
       {showReplyInput ? (
         <Input

@@ -49,6 +49,14 @@
   align-items: center;
 }
 
+.comment-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .reply-button {
   align-self: start;
   margin-left: auto;
@@ -61,7 +69,20 @@
   align-items: center;
 }
 
-.reply-button img {
+.reply-button img,
+.delete-button img {
   width: 15px;
   height: 15px;
+}
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+  color: hsl(358, 79%, 66%);
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  gap: 0.3rem;
+  cursor: pointer;
 }

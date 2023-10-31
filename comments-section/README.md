@@ -50,5 +50,10 @@ The designs were created to the following widths:
 - Family: [Rubik](https://fonts.google.com/specimen/Rubik)
 - Weights: 400, 500, 700
 
-
 https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9
+
+### TODO
+
+- Modal to confirm delete
+- Edit own comment
+- Change send for Reply when replying
