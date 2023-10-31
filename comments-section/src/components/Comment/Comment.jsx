@@ -2,14 +2,17 @@ import Counter from "../Counter/Counter";
 import User from "../User/User";
 import Replies from "../../containers/RepliesContainer/RepliesContainer";
 import PropTypes from "prop-types";
-import "./comment.css";
-import currentUser from "../../../mock-data/curr-user";
-import { useState } from "react";
 import Input from "./Input/Input";
-import Modal from "../Modal/Modal";
 import Edit from "./Edit/Edit";
 import Button from "../Button/Button";
-import ModalContent from "./ModalContent";
+import CurrentUserOptions from "./CurrentUserOptions";
+
+import "./comment.css";
+
+import { useState } from "react";
+import useWindowDimensions from "../../utils/useWindowDimension";
+
+import currentUser from "../../../mock-data/curr-user";
 
 const Comment = ({ comment, setCommentsList, isReply }) => {
   const [showReplyInput, setShowReplyInput] = useState(false);
@@ -17,11 +20,31 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
   const [commentContent, setCommentContent] = useState(comment.content);
   const [isBeingEdited, setIsBeingEdited] = useState(false);
 
+  const { width } = useWindowDimensions();
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleReply = () => {
     setShowReplyInput(!showReplyInput);
+  };
+
+  const createUserOptions = (username, currentUsername) => {
+    return username === currentUsername ? (
+      <CurrentUserOptions
+        openModal={openModal}
+        closeModal={closeModal}
+        isModalOpen={isModalOpen}
+        handleDelete={handleDelete}
+        setIsBeingEdited={setIsBeingEdited}
+        width={width}
+      />
+    ) : (
+      <Button className="reply-button" onClick={handleReply}>
+        <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
+        Reply
+      </Button>
+    );
   };
 
   const handleDelete = () => {
@@ -49,7 +72,10 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
   return (
     <article className="comment-container">
       <div className="comment-box">
-        <Counter upvotes={comment.upvotes} />
+        <div className={width < 768 ? "mobile-counter-container" : null}>
+          <Counter upvotes={comment.upvotes} />
+          {width < 768 ? createUserOptions(comment.user.username, currentUser.username) : null}
+        </div>
         <div className="comment-box--user">
           <div className="comment-box--user_date">
             <div className="user-date-container">
@@ -60,40 +86,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
               />
               <p>{comment.createdAt}</p>
             </div>
-            {comment.user.username === currentUser.username ? (
-              <div className="comment-buttons-container">
-                <Button onClick={openModal} className="delete-button">
-                  <img
-                    src="/icon-delete.svg"
-                    alt="delete"
-                    className="delete-icon"
-                  />
-                  Delete
-                </Button>
-                <Button
-                  className="edit-button"
-                  onClick={() => setIsBeingEdited(true)}
-                >
-                  <img src="/icon-edit.svg" alt="edit" className="edit-icon" />
-                  Edit
-                </Button>
-                <Modal isOpen={isModalOpen} onClose={closeModal}>
-                  <ModalContent
-                    closeModal={closeModal}
-                    handleDelete={handleDelete}
-                    title={"Delete Comment"}
-                    paragraph={"Are you sure?"}
-                    confirm={"YES, DELETE"}
-                    cancel={"NO, CANCEL"}
-                  />
-                </Modal>
-              </div>
-            ) : (
-              <Button className="reply-button" onClick={handleReply}>
-                <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
-                Reply
-              </Button>
-            )}
+            {width > 768 ? createUserOptions(comment.user.username, currentUser.username) : null}
           </div>
           <div className="comment-edit-container">
             {!isBeingEdited ? (

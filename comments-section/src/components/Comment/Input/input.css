@@ -10,6 +10,7 @@
 
 .comment-input {
   padding: 2rem;
+  width: calc(100% - 2rem * 2)
 }
 
 .input-container form {
@@ -35,4 +36,29 @@
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 5px;
+}
+
+@media (max-width: 1024px) {
+  .comment-input form {
+    flex-direction: column;
+  }
+  .input-container button {
+    height:6rem;
+    align-self: end;
+  }
+  .input-comment {
+    width:100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-container button {
+    width:25%;
+  }
+}
+
+@media (max-width: 512px) {
+  .input-container button {
+    width:50%;
+  }
 }

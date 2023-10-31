@@ -148,3 +148,24 @@
 .delete-modal-buttons .delete-modal-button {
   background-color: hsl(358, 79%, 66%);
 }
+
+@media (max-width: 768px) {
+  .comment-box {
+    flex-direction: column;
+  }
+  .mobile-counter-container {
+    order:1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .mobile-counter-container button {
+    align-self: center;
+  }
+}
+
+@media (max-width: 512px) {
+  .mobile-buttons {
+    flex-direction: column;
+  }
+}
