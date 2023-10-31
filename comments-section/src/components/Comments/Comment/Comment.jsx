@@ -1,6 +1,6 @@
 import Counter from "../../Counter/Counter";
 import User from "../../User/User";
-import Replies from "../../Replies/Replies";
+import Replies from "../../../containers/RepliesContainer/RepliesContainer";
 import PropTypes from "prop-types";
 import "./comment.css";
 import currentUser from "../../../../mock-data/curr-user";

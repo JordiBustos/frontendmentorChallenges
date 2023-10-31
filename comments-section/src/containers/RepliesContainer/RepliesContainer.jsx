@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import Reply from "./Reply/Reply";
+import Reply from "../../components/Reply/Reply";
 import "./replies.css";
 
-const Replies = ({ replies, updateComments }) => {
+const RepliesContainer = ({ replies, updateComments }) => {
   return (
     <div className="replies">
       <div className="line-container">
@@ -17,9 +17,9 @@ const Replies = ({ replies, updateComments }) => {
   );
 };
 
-Replies.propTypes = {
+RepliesContainer.propTypes = {
   replies: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateComments: PropTypes.func.isRequired,
 };
 
-export default Replies;
+export default RepliesContainer;

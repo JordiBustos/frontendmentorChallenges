@@ -1,12 +1,12 @@
 import "./App.css";
-import Comments from "./components/Comments/Comments";
+import CommentsContainer from "./containers/CommentsContainer";
 import comments from "../mock-data/comments";
 
 function App() {
   return (
     <>
       <h1>Comments Section</h1>
-      <Comments comments={comments[0]} />
+      <CommentsContainer comments={comments[0]} />
     </>
   );
 }

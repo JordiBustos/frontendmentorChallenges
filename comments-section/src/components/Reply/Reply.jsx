@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Comment from "../../Comments/Comment/Comment";
+import Comment from "../Comments/Comment/Comment";
 
 import "./reply.css";
 

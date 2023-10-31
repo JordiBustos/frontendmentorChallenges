@@ -1,9 +1,9 @@
-import Comment from "./Comment/Comment";
-import Input from "./Input/Input";
+import Comment from "../components/Comments/Comment/Comment";
+import Input from "../components/Comments/Input/Input";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-const Comments = ({ comments }) => {
+const CommentsContainer = ({ comments }) => {
   const [commentsList, setCommentsList] = useState(comments);
 
   return (
@@ -25,8 +25,8 @@ const Comments = ({ comments }) => {
   );
 };
 
-Comments.propTypes = {
+CommentsContainer.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default Comments;
+export default CommentsContainer;
