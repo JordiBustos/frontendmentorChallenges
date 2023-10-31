@@ -1,0 +1,35 @@
+.input-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  justify-content: space-between;
+  background-color: white;
+  padding:2rem;
+}
+
+.input-container form {
+  flex-basis: 90%;
+  padding:0;
+  display: flex;
+  gap:1rem;
+  font-size:1rem;
+}
+
+.input-comment {
+  width: 90%;
+  height:100%;
+}
+
+.input-container button {
+  width:10%;
+  height:70%;
+  align-self: start;
+  color:white;
+  background-color: hsl(238, 40%, 52%);
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 5px;
+}

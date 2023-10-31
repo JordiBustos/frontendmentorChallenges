@@ -14,6 +14,7 @@ export default {0: [
     "replies": [
       {
         "id": 5,
+        "replyId": 1,
         "content": "Nice!",
         "createdAt": "1 week ago",
         "upvotes": 0,
@@ -43,6 +44,7 @@ export default {0: [
     "replies": [
       {
         "id": 3,
+        "replyId": 2,
         "content": "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
         "createdAt": "1 week ago",
         "upvotes": 4,
@@ -57,6 +59,7 @@ export default {0: [
       },
       {
         "id": 4,
+        "replyId": 2,
         "content": "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
         "createdAt": "2 days ago",
         "upvotes": 2,

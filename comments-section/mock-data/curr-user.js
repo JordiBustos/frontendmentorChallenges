@@ -1,7 +1,7 @@
 export default {
   "image": { 
-    "png": "./images/avatars/image-juliusomo.png",
-    "webp": "./images/avatars/image-juliusomo.webp"
+    "png": "/avatars/image-juliusomo.png",
+    "webp": "/avatars/image-juliusomo.webp"
   },
   "username": "juliusomo"
 }

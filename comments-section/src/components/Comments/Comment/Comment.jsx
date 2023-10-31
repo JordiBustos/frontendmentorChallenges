@@ -4,8 +4,16 @@ import Replies from "../../Replies/Replies";
 import PropTypes from "prop-types";
 import "./comment.css";
 import currentUser from "../../../../mock-data/curr-user";
+import { useState } from "react";
+import Input from "../Input/Input";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, setCommentsList, isReply }) => {
+  const [showReplyInput, setShowReplyInput] = useState(false);
+
+  const handleReply = () => {
+    setShowReplyInput(!showReplyInput);
+  }
+
   return (
     <article className="comment-container">
       <div className="comment-box">
@@ -20,13 +28,18 @@ const Comment = ({ comment }) => {
           </div>
           <p className="comment-box--text">{comment.content}</p>
         </div>
-        <button className="reply-button">
+        <button className="reply-button" onClick={handleReply}>
           <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
           Reply
         </button>
       </div>
-      {comment.replies.length > 0 ? (
-        <Replies replies={comment.replies} />
+      {
+        showReplyInput ? (
+          <Input updateComments={setCommentsList} isReply={isReply} commentId={comment?.replyId ? comment.replyId : comment.id} />
+        ) : null
+      }  
+      {comment?.replies.length > 0 ? (
+        <Replies replies={comment.replies} updateComments={setCommentsList}/>
       ) : null}
     </article>
   );
@@ -45,7 +58,11 @@ Comment.propTypes = {
     upvotes: PropTypes.number.isRequired,
     replies: PropTypes.arrayOf(PropTypes.object).isRequired,
     createdAt: PropTypes.string.isRequired,
+    replyId: PropTypes.number,
+    id: PropTypes.number.isRequired,
   }).isRequired,
+  isReply: PropTypes.bool,
+  setCommentsList: PropTypes.func,
 };
 
 export default Comment;

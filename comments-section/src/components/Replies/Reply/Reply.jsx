@@ -3,13 +3,13 @@ import Comment from "../../Comments/Comment/Comment";
 
 import "./reply.css";
 
-const Reply = ({ reply }) => {
+const Reply = ({ reply, updateComments }) => {
   const modifiedReply = reply;
   !modifiedReply.replies ? (modifiedReply.replies = []) : null;
 
   return (
     <div className={"comment-box reply"}>
-      <Comment comment={modifiedReply} />
+      <Comment comment={modifiedReply} updateComments={updateComments} isReply={true}/>
     </div>
   );
 };
@@ -26,8 +26,9 @@ Reply.propTypes = {
     content: PropTypes.string.isRequired,
     upvotes: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
-    replyingTo: PropTypes.string.isRequired,
+    replyingTo: PropTypes.string,
   }).isRequired,
+  updateComments: PropTypes.func.isRequired,
 };
 
 export default Reply;
