@@ -54,7 +54,8 @@ https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9
 
 ### TODO
 
-- Modal to confirm delete
-- Edit own comment
+- Mobile css
+- Edit own comment css
+- Optimize delete modal
 - Change send for Reply when replying
 - Solve id problem because comments.length doesn't takes account of nested replies. 

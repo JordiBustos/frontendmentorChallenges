@@ -2,11 +2,7 @@ import currentUser from "../../../../mock-data/curr-user";
 import "./input.css";
 import PropTypes from "prop-types";
 
-const Input = ({
-  updateComments,
-  isReply,
-  commentId,
-}) => {
+const Input = ({ updateComments, isReply, commentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const content = e.target.previousElementSibling.value;
@@ -53,7 +49,9 @@ const Input = ({
           type="text"
           placeholder="Add a comment..."
         />
-        <button onClick={handleSubmit}>SEND</button>
+        <button onClick={handleSubmit}>
+          {commentId !== null ? "Reply" : "Send"}
+        </button>
       </form>
     </section>
   );

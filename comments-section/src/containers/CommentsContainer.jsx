@@ -1,5 +1,5 @@
-import Comment from "../components/Comments/Comment/Comment";
-import Input from "../components/Comments/Input/Input";
+import Comment from "../components/Comment/Comment";
+import Input from "../components/Comment/Input/Input";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
