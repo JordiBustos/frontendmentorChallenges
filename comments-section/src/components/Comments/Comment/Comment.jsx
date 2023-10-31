@@ -7,7 +7,11 @@ import currentUser from "../../../../mock-data/curr-user";
 import { useState } from "react";
 import Input from "../Input/Input";
 
-const Comment = ({ comment, setCommentsList, isReply }) => {
+const Comment = ({
+  comment,
+  setCommentsList,
+  isReply,
+}) => {
   const [showReplyInput, setShowReplyInput] = useState(false);
 
   const handleReply = () => {
@@ -15,6 +19,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
   };
 
   const handleDelete = () => {
+    console.log(comment.replyId)
     setCommentsList((prev) => {
       if (comment.replyId) {
         return prev.map((com) => {
@@ -70,7 +75,10 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
         />
       ) : null}
       {comment?.replies.length > 0 ? (
-        <Replies replies={comment.replies} updateComments={setCommentsList} />
+        <Replies
+          replies={comment.replies}
+          updateComments={setCommentsList}
+        />
       ) : null}
     </article>
   );

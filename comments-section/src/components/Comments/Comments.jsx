@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const Comments = ({ comments }) => {
   const [commentsList, setCommentsList] = useState(comments);
+
   return (
     <div>
       {commentsList.map((comment) => (
