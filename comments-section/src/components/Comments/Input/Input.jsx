@@ -2,7 +2,7 @@ import currentUser from "../../../../mock-data/curr-user";
 import "./input.css";
 import PropTypes from "prop-types";
 
-const Input = ({updateComments, isReply, commentId}) => {
+const Input = ({ updateComments, isReply, commentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const content = e.target.previousElementSibling.value;
@@ -10,7 +10,7 @@ const Input = ({updateComments, isReply, commentId}) => {
       updateComments((prev) => createComment(prev, content, commentId));
       e.target.previousElementSibling.value = "";
     }
-  }
+  };
 
   const createComment = (prevComments, newContent, commentId) => {
     const newComment = {
@@ -18,7 +18,7 @@ const Input = ({updateComments, isReply, commentId}) => {
       content: newContent,
       user: currentUser,
       upvotes: 0,
-      createdAt: 'today',
+      createdAt: "today",
     };
 
     if (!isReply) {
@@ -34,7 +34,7 @@ const Input = ({updateComments, isReply, commentId}) => {
     });
 
     return [...prevComments];
-  }
+  };
 
   return (
     <section className="input-container">
@@ -42,18 +42,21 @@ const Input = ({updateComments, isReply, commentId}) => {
         <img src={currentUser.image.webp} alt={currentUser.username} />
       </div>
       <form>
-        <input className="input-comment" type="text" placeholder="Add a comment..." />
+        <input
+          className="input-comment"
+          type="text"
+          placeholder="Add a comment..."
+        />
         <button onClick={handleSubmit}>SEND</button>
       </form>
-      
     </section>
-  )
-}
+  );
+};
 
 Input.propTypes = {
   updateComments: PropTypes.func.isRequired,
   isReply: PropTypes.bool,
   commentId: PropTypes.number,
-}
+};
 
 export default Input;

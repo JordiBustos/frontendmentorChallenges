@@ -9,7 +9,11 @@ const Reply = ({ reply, updateComments }) => {
 
   return (
     <div className={"comment-box reply"}>
-      <Comment comment={modifiedReply} updateComments={updateComments} isReply={true}/>
+      <Comment
+        comment={modifiedReply}
+        updateComments={updateComments}
+        isReply={true}
+      />
     </div>
   );
 };

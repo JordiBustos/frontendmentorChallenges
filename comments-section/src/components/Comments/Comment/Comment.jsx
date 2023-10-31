@@ -12,7 +12,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
 
   const handleReply = () => {
     setShowReplyInput(!showReplyInput);
-  }
+  };
 
   return (
     <article className="comment-container">
@@ -33,13 +33,15 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
           Reply
         </button>
       </div>
-      {
-        showReplyInput ? (
-          <Input updateComments={setCommentsList} isReply={isReply} commentId={comment?.replyId ? comment.replyId : comment.id} />
-        ) : null
-      }  
+      {showReplyInput ? (
+        <Input
+          updateComments={setCommentsList}
+          isReply={isReply}
+          commentId={comment?.replyId ? comment.replyId : comment.id}
+        />
+      ) : null}
       {comment?.replies.length > 0 ? (
-        <Replies replies={comment.replies} updateComments={setCommentsList}/>
+        <Replies replies={comment.replies} updateComments={setCommentsList} />
       ) : null}
     </article>
   );
