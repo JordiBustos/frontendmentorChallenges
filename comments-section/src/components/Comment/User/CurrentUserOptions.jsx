@@ -1,6 +1,6 @@
-import Button from "../Button/Button";
-import Modal from "../Modal/Modal";
-import ModalContent from "./ModalContent";
+import Button from "../../Button/Button";
+import Modal from "../../Modal/Modal";
+import ModalContent from "../ModalContent";
 import PropTypes from "prop-types";
 
 const CurrentUserOptions = ({

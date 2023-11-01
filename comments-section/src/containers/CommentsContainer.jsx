@@ -1,16 +1,18 @@
 import Comment from "../components/Comment/Comment";
 import Input from "../components/Comment/Input/Input";
-import PropTypes from "prop-types";
+import comments from "../../mock-data/comments";
 import { useState } from "react";
 
-const CommentsContainer = ({ comments }) => {
-  const [commentsList, setCommentsList] = useState(comments);
+const CommentsContainer = () => {
+  const [commentsList, setCommentsList] = useState(comments[0]);
+  console.log(commentsList)
 
   const renderedComments = commentsList.map((comment) => {
     return (
       <Comment
         comment={comment}
         setCommentsList={setCommentsList}
+        isReply={true}
         key={comment.id}
       />
     );
@@ -27,10 +29,6 @@ const CommentsContainer = ({ comments }) => {
       />
     </div>
   );
-};
-
-CommentsContainer.propTypes = {
-  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default CommentsContainer;

@@ -1,4 +1,5 @@
-.user {
+.user,
+.user--username {
   display: flex;
   flex-direction: row;
   gap: 0.8rem;
@@ -11,10 +12,7 @@
 }
 
 .user--username {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.7rem;
 }
 
 .user--current {

@@ -4,8 +4,7 @@ import Replies from "../../containers/RepliesContainer/RepliesContainer";
 import PropTypes from "prop-types";
 import Input from "./Input/Input";
 import Edit from "./Edit/Edit";
-import Button from "../Button/Button";
-import CurrentUserOptions from "./CurrentUserOptions";
+import UserOptionsFactory from "./User/UserOptionsFactory";
 
 import "./comment.css";
 
@@ -22,65 +21,23 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
 
   const { width } = useWindowDimensions();
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  const handleReply = () => {
-    setShowReplyInput(!showReplyInput);
-  };
-
-  const createUserOptions = (username, currentUsername) => {
-    return username === currentUsername ? (
-      <CurrentUserOptions
-        openModal={openModal}
-        closeModal={closeModal}
-        isModalOpen={isModalOpen}
-        handleDelete={handleDelete}
-        setIsBeingEdited={setIsBeingEdited}
-        width={width}
-      />
-    ) : (
-      <Button className="reply-button" onClick={handleReply}>
-        <img src="/icon-reply.svg" alt="reply" className="reply-icon" />
-        Reply
-      </Button>
-    );
-  };
-
-  const handleDelete = () => {
-    setCommentsList((prev) => {
-      if (comment.replyId) {
-        return prev.map((com) => {
-          if (com.id === comment.replyId) {
-            return {
-              ...com,
-              replies: com.replies.filter((rep) => rep.id !== comment.id),
-            };
-          }
-          return com;
-        });
-      }
-      return prev.filter((com) => com.id !== comment.id);
-    });
-  };
-
   const updateContent = (newContent) => {
     // update db or whatever
     setCommentContent(newContent);
   };
 
-  const renderedReplies = comment?.replies ? (
+  const renderedReplies = comment?.replies && (
     <Replies replies={comment.replies} updateComments={setCommentsList} />
-  ) : null;
+  );
 
-  const renderedInput = showReplyInput ? (
+  const renderedInput = showReplyInput && (
     <Input
       updateComments={setCommentsList}
       isReply={isReply}
-      commentId={comment?.replyId ? comment.replyId : comment.id}
+      commentId={comment.replyId ? comment.replyId : comment.id}
       setShowReplyInput={setShowReplyInput}
     />
-  ) : null;
+  );
 
   const renderedCommentBox = !isBeingEdited ? (
     <p className="comment-box--text">{commentContent}</p>
@@ -90,16 +47,26 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
       updateComment={updateContent}
       setIsBeingEdited={setIsBeingEdited}
     />
-  )
+  );
+
+  const userOptionsRendered = UserOptionsFactory(
+    comment,
+    currentUser.username,
+    setIsModalOpen,
+    isModalOpen,
+    setIsBeingEdited,
+    width,
+    showReplyInput,
+    setShowReplyInput,
+    setCommentsList
+  );
 
   return (
     <article className="comment-container">
       <div className="comment-box">
         <div className={width < 768 ? "mobile-counter-container" : null}>
           <Counter upvotes={comment.upvotes} />
-          {width < 768
-            ? createUserOptions(comment.user.username, currentUser.username)
-            : null}
+          {width < 768 && userOptionsRendered}
         </div>
         <div className="comment-box--user">
           <div className="comment-box--user_date">
@@ -111,17 +78,13 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
               />
               <p>{comment.createdAt}</p>
             </div>
-            {width > 768
-              ? createUserOptions(comment.user.username, currentUser.username)
-              : null}
+            {width >= 768 && userOptionsRendered}
           </div>
-          <div className="comment-edit-container">
-            { renderedCommentBox }
-          </div>
+          <div className="comment-edit-container">{renderedCommentBox}</div>
         </div>
       </div>
-      { renderedInput }
-      { renderedReplies }
+      {renderedInput}
+      {renderedReplies}
     </article>
   );
 };
