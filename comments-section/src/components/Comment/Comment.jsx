@@ -10,7 +10,7 @@ import CurrentUserOptions from "./CurrentUserOptions";
 import "./comment.css";
 
 import { useState } from "react";
-import useWindowDimensions from "../../utils/useWindowDimension";
+import useWindowDimensions from "../../hooks/useWindowDimension";
 
 import currentUser from "../../../mock-data/curr-user";
 
