@@ -8,12 +8,12 @@ const Input = ({ updateComments, isReply, commentId, setShowReplyInput }) => {
     e.preventDefault();
     const content = e.target.previousElementSibling.value;
     if (content) {
-      updateComments((prev) => createComment(prev, content, commentId, isReply));
+      updateComments((prev) =>
+        createComment(prev, content, commentId, isReply)
+      );
       e.target.previousElementSibling.value = "";
     }
   };
-
-  console.log(commentId)
 
   const createCommentObject = (
     id,

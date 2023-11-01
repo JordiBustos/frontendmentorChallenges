@@ -10,7 +10,7 @@ function UserOptionsFactory(
   width,
   showReplyInput,
   setShowReplyInput,
-  setCommentsList,
+  setCommentsList
 ) {
   if (comment.user.username === currentUsername) {
     return (
@@ -35,7 +35,7 @@ function UserOptionsFactory(
   );
 }
 
-function handleDelete (setCommentsList, comment) {
+function handleDelete(setCommentsList, comment) {
   setCommentsList((prev) => {
     if (comment.replyId) {
       return prev.map((com) => {

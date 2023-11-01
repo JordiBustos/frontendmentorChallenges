@@ -5,7 +5,6 @@ import { useState } from "react";
 
 const CommentsContainer = () => {
   const [commentsList, setCommentsList] = useState(comments[0]);
-  console.log(commentsList)
 
   const renderedComments = commentsList.map((comment) => {
     return (
@@ -21,7 +20,6 @@ const CommentsContainer = () => {
   return (
     <div>
       {renderedComments}
-
       <Input
         updateComments={setCommentsList}
         isReply={false}
