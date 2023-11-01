@@ -55,5 +55,4 @@ https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9
 ### TODO
 
 - Optimize delete modal
-- Change send for Reply when replying
 - Solve id problem because comments.length doesn't takes account of nested replies. 
