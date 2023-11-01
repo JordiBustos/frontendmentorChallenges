@@ -55,4 +55,5 @@ https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9
 ### TODO
 
 - Optimize delete modal
+- Avoid submitting when pressing enter
 - Solve id problem because comments.length doesn't takes account of nested replies. 

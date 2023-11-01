@@ -69,6 +69,29 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
     setCommentContent(newContent);
   };
 
+  const renderedReplies = comment?.replies ? (
+    <Replies replies={comment.replies} updateComments={setCommentsList} />
+  ) : null;
+
+  const renderedInput = showReplyInput ? (
+    <Input
+      updateComments={setCommentsList}
+      isReply={isReply}
+      commentId={comment?.replyId ? comment.replyId : comment.id}
+      setShowReplyInput={setShowReplyInput}
+    />
+  ) : null;
+
+  const renderedCommentBox = !isBeingEdited ? (
+    <p className="comment-box--text">{commentContent}</p>
+  ) : (
+    <Edit
+      currentText={commentContent}
+      updateComment={updateContent}
+      setIsBeingEdited={setIsBeingEdited}
+    />
+  )
+
   return (
     <article className="comment-container">
       <div className="comment-box">
@@ -93,29 +116,12 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
               : null}
           </div>
           <div className="comment-edit-container">
-            {!isBeingEdited ? (
-              <p className="comment-box--text">{commentContent}</p>
-            ) : (
-              <Edit
-                currentText={commentContent}
-                updateComment={updateContent}
-                setIsBeingEdited={setIsBeingEdited}
-              />
-            )}
+            { renderedCommentBox }
           </div>
         </div>
       </div>
-      {showReplyInput ? (
-        <Input
-          updateComments={setCommentsList}
-          isReply={isReply}
-          commentId={comment?.replyId ? comment.replyId : comment.id}
-          setShowReplyInput={setShowReplyInput}
-        />
-      ) : null}
-      {comment?.replies.length > 0 ? (
-        <Replies replies={comment.replies} updateComments={setCommentsList} />
-      ) : null}
+      { renderedInput }
+      { renderedReplies }
     </article>
   );
 };

@@ -3,15 +3,17 @@ import Reply from "../../components/Reply/Reply";
 import "./replies.css";
 
 const RepliesContainer = ({ replies, updateComments }) => {
+  const renderedReplies = replies.map((reply) => {
+    return <Reply key={reply.id} reply={reply} updateComments={updateComments} />;
+  });
+  
   return (
     <div className="replies">
       <div className="line-container">
         <span className="replies-line"></span>
       </div>
       <div className="replies-container">
-        {replies.map((reply) => (
-          <Reply key={reply.id} reply={reply} updateComments={updateComments} />
-        ))}
+        { renderedReplies }
       </div>
     </div>
   );

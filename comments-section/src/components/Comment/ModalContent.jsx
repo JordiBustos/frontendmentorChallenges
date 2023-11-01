@@ -11,14 +11,14 @@ const ModalContent = ({
 }) => {
   return (
     <div className="delete-modal">
-      <h3>{title}</h3>
-      <p>{paragraph}</p>
+      <h3>{ title }</h3>
+      <p>{ paragraph }</p>
       <div className="delete-modal-buttons">
         <Button onClick={closeModal} className="cancel-button">
-          {cancel}
+          { cancel }
         </Button>
         <Button onClick={handleDelete} className="delete-modal-button">
-          {confirm}
+          { confirm }
         </Button>
       </div>
     </div>
