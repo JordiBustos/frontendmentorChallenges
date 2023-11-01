@@ -13,31 +13,46 @@ const Input = ({ updateComments, isReply, commentId, setShowReplyInput }) => {
     }
   };
 
-  const createComment = (prevComments, newContent, commentId) => {
-    const newComment = {
-      id: prevComments.length + 1,
-      content: newContent,
-      user: currentUser,
-      upvotes: 0,
-      createdAt: "today",
+  const createCommentObject = (
+    id,
+    content,
+    user,
+    upvotes,
+    createdAt,
+    isReply
+  ) => {
+    const tmpObj = {
+      id,
+      content,
+      user,
+      upvotes,
+      createdAt,
     };
+    isReply ? (tmpObj.replyId = commentId) : (tmpObj.replies = []);
+    return tmpObj;
+  };
 
-    if (!isReply) {
-      newComment.replies = [];
-      return [...prevComments, newComment];
-    }
+  const createComment = (prevComments, newContent, commentId) => {
+    const newComment = createCommentObject(
+      prevComments.length + 1,
+      newContent,
+      currentUser,
+      0,
+      "today",
+      isReply
+    );
+
+    if (!isReply) return [...prevComments, newComment];
 
     setShowReplyInput(false);
-    newComment.replyId = commentId;
-
-    prevComments = prevComments.map((comment) => {
-      if (comment.id === commentId) {
-        comment.replies = [...comment.replies, newComment];
-      }
-      return comment;
-    });
-
-    return [...prevComments];
+    return [
+      ...prevComments.map((comment) => {
+        if (comment.id === commentId) {
+          comment.replies = [...comment.replies, newComment];
+        }
+        return comment;
+      }),
+    ];
   };
 
   const containerClasses = [
