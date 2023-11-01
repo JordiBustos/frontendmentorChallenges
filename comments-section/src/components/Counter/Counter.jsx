@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import Button from "../Button/Button";
 import "./counter.css";
 
 const Counter = ({ upvotes }) => {
@@ -26,13 +27,13 @@ const Counter = ({ upvotes }) => {
 
   return (
     <div className="counter-container">
-      <button onClick={() => handleClick(1)} disabled={increaseWasClicked}>
+      <Button onClick={() => handleClick(1)} disabled={increaseWasClicked}>
         +
-      </button>
+      </Button>
       <p className="upvotes">{currUpvotes}</p>
-      <button onClick={() => handleClick(-1)} disabled={decreaseWasClicked}>
+      <Button onClick={() => handleClick(-1)} disabled={decreaseWasClicked}>
         -
-      </button>
+      </Button>
     </div>
   );
 };

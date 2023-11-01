@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import Button from "../../Button/Button";
 import "./edit.css";
 
 const Edit = ({ currentText, updateComment, setIsBeingEdited }) => {
@@ -25,7 +26,9 @@ const Edit = ({ currentText, updateComment, setIsBeingEdited }) => {
           cols="8"
           wrap="soft"
         ></textarea>
-        <button onClick={handleSubmit}>UPDATE</button>
+        <Button className="update-button" onClick={handleSubmit}>
+          UPDATE
+        </Button>
       </form>
     </section>
   );

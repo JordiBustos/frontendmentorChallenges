@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Button from "../Button/Button";
 import "./modal.css";
 
 const Modal = ({ children, isOpen, onClose }) => {
@@ -6,11 +7,11 @@ const Modal = ({ children, isOpen, onClose }) => {
     <div className={`modal ${isOpen ? "is-active" : ""}`}>
       <div className="modal-background" onClick={onClose}></div>
       <div className="modal-content">{children}</div>
-      <button
-        className="modal-close is-large"
-        aria-label="close"
+      <Button
+        className={"modal-close is-large"}
+        ariaLabel="close"
         onClick={onClose}
-      ></button>
+      />
     </div>
   );
 };

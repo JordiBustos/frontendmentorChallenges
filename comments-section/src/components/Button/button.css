@@ -1,0 +1,81 @@
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.update-button,
+.input-button {
+  color: white;
+  background-color: hsl(238, 40%, 52%);
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.reply-button,
+.update-button,
+.edit-button {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-self: start;
+  margin-left: auto;
+  font-size: 1rem;
+  font-weight: bold;
+  align-items: center;
+}
+
+.reply-button,
+.edit-button {
+  color: hsl(238, 40%, 52%);
+}
+
+.reply-button img,
+.delete-button img,
+.edit-button img {
+  width: 15px;
+  height: 15px;
+}
+
+.update-button {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  align-self: end;
+}
+
+.input-button {
+  font-size: 1.2rem;
+  width: 10%;
+  height: 70%;
+  align-self: start;
+}
+
+.delete-button {
+  color: hsl(358, 79%, 66%);
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  gap: 0.3rem;
+}
+
+@media (max-width: 1024px) {
+  .input-button {
+    height: 6rem;
+    align-self: end;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-button {
+    width: 25%;
+  }
+}
+
+@media (max-width: 512px) {
+  .input-button {
+    width: 50%;
+  }
+}

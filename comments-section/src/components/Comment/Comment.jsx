@@ -74,7 +74,9 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
       <div className="comment-box">
         <div className={width < 768 ? "mobile-counter-container" : null}>
           <Counter upvotes={comment.upvotes} />
-          {width < 768 ? createUserOptions(comment.user.username, currentUser.username) : null}
+          {width < 768
+            ? createUserOptions(comment.user.username, currentUser.username)
+            : null}
         </div>
         <div className="comment-box--user">
           <div className="comment-box--user_date">
@@ -86,7 +88,9 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
               />
               <p>{comment.createdAt}</p>
             </div>
-            {width > 768 ? createUserOptions(comment.user.username, currentUser.username) : null}
+            {width > 768
+              ? createUserOptions(comment.user.username, currentUser.username)
+              : null}
           </div>
           <div className="comment-edit-container">
             {!isBeingEdited ? (
@@ -106,6 +110,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
           updateComments={setCommentsList}
           isReply={isReply}
           commentId={comment?.replyId ? comment.replyId : comment.id}
+          setShowReplyInput={setShowReplyInput}
         />
       ) : null}
       {comment?.replies.length > 0 ? (

@@ -1,8 +1,9 @@
 import currentUser from "../../../../mock-data/curr-user";
-import "./input.css";
 import PropTypes from "prop-types";
+import "./input.css";
+import Button from "../../Button/Button";
 
-const Input = ({ updateComments, isReply, commentId }) => {
+const Input = ({ updateComments, isReply, commentId, setShowReplyInput }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const content = e.target.previousElementSibling.value;
@@ -26,6 +27,7 @@ const Input = ({ updateComments, isReply, commentId }) => {
       return [...prevComments, newComment];
     }
 
+    setShowReplyInput(false);
     newComment.replyId = commentId;
 
     prevComments = prevComments.map((comment) => {
@@ -54,9 +56,9 @@ const Input = ({ updateComments, isReply, commentId }) => {
           type="text"
           placeholder="Add a comment..."
         />
-        <button onClick={handleSubmit}>
+        <Button className="input-button" onClick={handleSubmit}>
           {commentId !== null ? "Reply" : "Send"}
-        </button>
+        </Button>
       </form>
     </section>
   );
@@ -66,6 +68,7 @@ Input.propTypes = {
   updateComments: PropTypes.func.isRequired,
   isReply: PropTypes.bool,
   commentId: PropTypes.number,
+  setShowReplyInput: PropTypes.func,
 };
 
 export default Input;

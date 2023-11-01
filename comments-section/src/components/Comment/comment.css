@@ -3,9 +3,7 @@
 }
 
 .comment-box,
-.comment-box--user_date,
-.reply-button,
-.edit-button {
+.comment-box--user_date {
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -75,38 +73,6 @@
   gap: 1rem;
 }
 
-.reply-button,
-.edit-button {
-  align-self: start;
-  margin-left: auto;
-  color: hsl(238, 40%, 52%);
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-  align-items: center;
-}
-
-.reply-button img,
-.delete-button img,
-.edit-button img {
-  width: 15px;
-  height: 15px;
-}
-
-.delete-button {
-  background-color: transparent;
-  border: none;
-  color: hsl(358, 79%, 66%);
-  font-size: 1rem;
-  display: flex;
-  flex-direction: row;
-  font-weight: bold;
-  gap: 0.3rem;
-  cursor: pointer;
-}
-
 .delete-modal {
   display: flex;
   flex-direction: column;
@@ -138,7 +104,6 @@
   border: none;
   font-weight: bold;
   font-size: 1rem;
-  cursor: pointer;
 }
 
 .delete-modal-buttons .cancel-button {
@@ -154,7 +119,7 @@
     flex-direction: column;
   }
   .mobile-counter-container {
-    order:1;
+    order: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

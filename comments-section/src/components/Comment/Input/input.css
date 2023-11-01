@@ -13,6 +13,19 @@
   width: calc(100% - 2rem * 2)
 }
 
+.reply-input {
+  padding: 2rem 0;
+  border: 5px;
+  border-top: 1px solid rgba(95, 95, 95, 0.2);
+}
+
+.reply-input div img {
+  margin-left: 1rem;
+}
+.reply-input form {
+  margin-right:1rem;
+}
+
 .input-container form {
   flex-basis: 90%;
   padding: 0;
@@ -26,39 +39,11 @@
   height: 100%;
 }
 
-.input-container button {
-  width: 10%;
-  height: 70%;
-  align-self: start;
-  color: white;
-  background-color: hsl(238, 40%, 52%);
-  border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
 @media (max-width: 1024px) {
   .comment-input form {
     flex-direction: column;
   }
-  .input-container button {
-    height:6rem;
-    align-self: end;
-  }
   .input-comment {
     width:100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .input-container button {
-    width:25%;
-  }
-}
-
-@media (max-width: 512px) {
-  .input-container button {
-    width:50%;
   }
 }

@@ -12,7 +12,13 @@ const CurrentUserOptions = ({
   width,
 }) => {
   return (
-    <div className={width < 768 ? "comment-buttons-container mobile-buttons" : "comment-buttons-container"}>
+    <div
+      className={
+        width < 768
+          ? "comment-buttons-container mobile-buttons"
+          : "comment-buttons-container"
+      }
+    >
       <Button onClick={openModal} className="delete-button">
         <img src="/icon-delete.svg" alt="delete" className="delete-icon" />
         Delete
