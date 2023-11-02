@@ -53,7 +53,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
 
   const userOptionsRendered = UserOptionsFactory(
     comment,
-    currentUser.username,
+    isCurrentUser,
     setIsModalOpen,
     isModalOpen,
     setIsBeingEdited,
