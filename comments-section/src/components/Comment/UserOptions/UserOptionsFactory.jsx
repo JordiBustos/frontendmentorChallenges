@@ -3,7 +3,7 @@ import Button from "../../Button/Button";
 
 function UserOptionsFactory(
   comment,
-  currentUsername,
+  isCurrentUser,
   setIsModalOpen,
   isModalOpen,
   setIsBeingEdited,
@@ -12,7 +12,7 @@ function UserOptionsFactory(
   setShowReplyInput,
   setCommentsList
 ) {
-  if (comment.user.username === currentUsername) {
+  if (isCurrentUser) {
     return (
       <CurrentUserOptions
         openModal={() => setIsModalOpen(true)}

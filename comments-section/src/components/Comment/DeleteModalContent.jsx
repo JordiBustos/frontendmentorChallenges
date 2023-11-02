@@ -1,7 +1,7 @@
 import Button from "../Button/Button";
 import PropTypes from "prop-types";
 
-const ModalContent = ({
+const DeleteModalContent = ({
   closeModal,
   handleDelete,
   title,
@@ -25,7 +25,7 @@ const ModalContent = ({
   );
 };
 
-ModalContent.propTypes = {
+DeleteModalContent.propTypes = {
   closeModal: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -34,4 +34,4 @@ ModalContent.propTypes = {
   cancel: PropTypes.string.isRequired,
 };
 
-export default ModalContent;
+export default DeleteModalContent;

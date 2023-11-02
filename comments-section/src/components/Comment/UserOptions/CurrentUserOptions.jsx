@@ -1,6 +1,6 @@
 import Button from "../../Button/Button";
 import Modal from "../../Modal/Modal";
-import ModalContent from "../ModalContent";
+import ModalContent from "../DeleteModalContent";
 import PropTypes from "prop-types";
 
 const CurrentUserOptions = ({

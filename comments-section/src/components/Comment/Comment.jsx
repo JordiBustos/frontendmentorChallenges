@@ -4,7 +4,7 @@ import Replies from "../../containers/RepliesContainer/RepliesContainer";
 import PropTypes from "prop-types";
 import Input from "./Input/Input";
 import Edit from "./Edit/Edit";
-import UserOptionsFactory from "./User/UserOptionsFactory";
+import UserOptionsFactory from "./UserOptions/UserOptionsFactory";
 
 import "./comment.css";
 
@@ -18,6 +18,8 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
   const [isBeingEdited, setIsBeingEdited] = useState(false);
+
+  const isCurrentUser = currentUser.username === comment.user.username;
 
   const { width } = useWindowDimensions();
 
@@ -73,7 +75,7 @@ const Comment = ({ comment, setCommentsList, isReply }) => {
             <div className="user-date-container">
               <User
                 user={comment.user}
-                isCurrent={currentUser.username === comment.user.username}
+                isCurrent={isCurrentUser}
                 createdAt={comment.createdAt}
               />
               <p>{comment.createdAt}</p>
