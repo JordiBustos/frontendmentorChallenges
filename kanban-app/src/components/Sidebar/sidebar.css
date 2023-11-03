@@ -2,6 +2,7 @@
   padding: 2.5rem;
   background-color: #2C2C38;
   flex-basis: 10%;
+  border-right: 2px solid #3E3E4A;
 }
 
 .sidebar__logo {
