@@ -1,12 +1,13 @@
 import "./navbar.css";
+import { useContext } from "react";
+import { BoardContext } from "../../contexts/BoardContext";
 
 const Navbar = () => {
+  const { activeBoard } = useContext(BoardContext);
   return (
     <nav className="navbar">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
-          Kanban
-        </a>
+        <h1>{activeBoard.name}</h1>
       </div>
     </nav>
   );

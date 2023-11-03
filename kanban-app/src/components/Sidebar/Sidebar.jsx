@@ -1,9 +1,12 @@
-import PropTypes from "prop-types";
 import SidebarTitle from "./SidebarTitle";
+import { BoardContext } from "../../contexts/BoardContext";
+import { useContext } from "react";
 import "./sidebar.css";
 
-const Sidebar = ({ boardNames }) => {
+const Sidebar = () => {
+  const { boardNames, activeBoard } = useContext(BoardContext);
   const boardNamesLength = boardNames.length;
+  
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -13,21 +16,17 @@ const Sidebar = ({ boardNames }) => {
           alt="logo kanban light"
         />
         <h3 className="sidebar__subtitle">ALL BOARDS ({boardNamesLength})</h3>
-        {createBoardLinks(boardNames)}
       </div>
+      {createBoardLinks(boardNames, activeBoard)}
     </div>
   );
 };
 
-Sidebar.propTypes = {
-  boardNames: PropTypes.array.isRequired,
-};
-
-function createBoardLinks(boardNames) {
+function createBoardLinks(boardNames, activeBoard) {
   const names = boardNames.map((name) => (
-    <SidebarTitle key={name} name={name} />
+    <SidebarTitle key={name} name={name} isActive={activeBoard.name === name} />
   ));
-  names.push(<SidebarTitle key="createNewBoard" name={"+Create new Board"} />);
+  names.push(<SidebarTitle key="createNewBoard" name={"+Create new Board"} isActive={false} />);
   return names;
 }
 

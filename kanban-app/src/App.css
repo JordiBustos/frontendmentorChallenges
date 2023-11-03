@@ -1,9 +1,14 @@
 #root {
   background-color: #21212D;
   width: 100vw;
+  height:100vh;
 }
 
 .main__container {
   display: flex;
   flex-direction: row;
+}
+
+.board-navbar__container {
+  flex-basis: 90%;
 }

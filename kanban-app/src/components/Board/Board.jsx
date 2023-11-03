@@ -1,14 +1,16 @@
-import PropTypes from "prop-types";
 import Column from "../Column/Column";
+import { BoardContext } from "../../contexts/BoardContext";
+import { useContext } from "react";
 import "./board.css";
 
-const Board = ({ board }) => {
-  const columns = board.columns;
-  return <div className="board-container">{createColumns(columns)}</div>;
-};
+const Board = () => {
+  const { returnActiveColumns } = useContext(BoardContext);
+  const columns = returnActiveColumns();
 
-Board.propTypes = {
-  board: PropTypes.object.isRequired,
+  
+
+
+  return <div className="board-container">{createColumns(columns)}</div>;
 };
 
 function createColumns(columns) {
