@@ -8,22 +8,28 @@ const Column = ({ name, tasks }) => {
 
   return (
     <div className={classNameContainer}>
-      <h2>{name}</h2>
       {tasks.length > 0 ? (
-        <ul className="column-card-container">
-          {tasks.map((task) => {
-            return (
-              <Card
-                title={task.title}
-                description={task.description}
-                subtasks={task.subtasks}
-                status={task.status}
-                key={task.title}
-              />
-            );
-          })}
-        </ul>
-      ) : null}
+        <section>
+          <h3 className="column__name">
+            {name} ({tasks.length})
+          </h3>
+          <ul className="column-card-container">
+            {tasks.map((task) => {
+              return (
+                <Card
+                  title={task.title}
+                  description={task.description}
+                  subtasks={task.subtasks}
+                  status={task.status}
+                  key={task.title}
+                />
+              );
+            })}
+          </ul>
+        </section>
+      ) : (
+        <h2 className="column__name--create">{name}</h2>
+      )}
     </div>
   );
 };

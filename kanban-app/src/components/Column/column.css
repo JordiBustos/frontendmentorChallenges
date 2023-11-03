@@ -21,3 +21,14 @@
   font-size: 2rem;
   color: #858EA2;
 }
+
+.column__name {
+  margin-left: 2.5rem;
+  color: #858EA2;
+  font-size:1rem;
+  letter-spacing: 2px;
+}
+
+.column__name {
+  text-transform: uppercase;
+}
