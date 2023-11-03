@@ -1,0 +1,23 @@
+.column-container,
+.column-container--create {
+  max-width: calc(100vw / 5 - 2rem);
+}
+
+.column-card-container,
+.column-container--create {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.column-container--create {
+  align-items: center;
+  justify-content: center;
+  background-color: #23232F;
+  padding: 4rem;
+}
+
+.column-container--create h2 {
+  font-size: 2rem;
+  color: #858EA2;
+}

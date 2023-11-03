@@ -1,0 +1,8 @@
+.board-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+  flex-basis:90%;
+  justify-content: space-between;
+  background-color: #21212D;
+}

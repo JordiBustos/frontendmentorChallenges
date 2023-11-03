@@ -1,0 +1,39 @@
+.sidebar {
+  padding: 2.5rem;
+  background-color: #2C2C38;
+  flex-basis: 10%;
+}
+
+.sidebar__logo {
+  margin-bottom: 3vh;
+}
+
+.sidebar__title,
+.sidebar__title--create {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
+  gap:.9rem;
+}
+
+.sidebar__title img,
+.sidebar__title--create img {
+  width:1.2rem;
+  height: 1.2rem;
+}
+
+.sidebar__title--create {
+  margin-top: 1rem;
+  color: #615EA1;
+}
+
+.sidebar__title--create h3,
+.sidebar__title h3,
+.sidebar__subtitle {
+  color: #858EA2;
+}
+
+.sidebar__subtitle {
+  font-size: 1rem;
+} 

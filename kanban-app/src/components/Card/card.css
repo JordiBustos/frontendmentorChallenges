@@ -1,0 +1,22 @@
+.card {
+  background-color: #2c2c38;
+  border-radius: 8px;
+  width: 100%;
+  padding: 1.5rem;
+  box-shadow: 0px 4px 8px rgba(44, 44, 56, 0.2);
+}
+
+.card__title,
+.card__text {
+  text-align: left;
+}
+
+.card__title {
+  color: #fff;
+  line-height: 100%;
+}
+
+.card__text {
+  color: #7b8191;
+  font-weight: bold;
+}
