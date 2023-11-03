@@ -27,16 +27,32 @@ const BoardProvider = ({ children }) => {
     setActiveBoard(newBoard);
   }
 
+  function createNewColumnInActiveBoard(columnName) {
+    const updatedBoards = boards.map((board) => {
+      if (board.name === activeBoard.name) {
+        const newColumn = {
+          name: columnName,
+          tasks: [],
+        };
+        const updatedColumns = [...board.columns, newColumn];
+        setActiveBoard({ ...board, columns: updatedColumns });
+        return { ...board, columns: updatedColumns };
+      }
+      return board;
+    });
+    setBoards(updatedBoards);
+  }
+
   return (
     <BoardContext.Provider
       value={{
         activeBoard,
         setActiveBoard,
         boardNames,
-        data,
         returnActiveColumns,
         findBoardByName,
-        createNewBoard
+        createNewBoard,
+        createNewColumnInActiveBoard
       }}
     >
       {children}

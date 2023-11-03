@@ -24,6 +24,7 @@ const Sidebar = () => {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onSubmit={(name) => createNewBoard(name)}
+        isNewBoard={true}
       />
     </div>
   );

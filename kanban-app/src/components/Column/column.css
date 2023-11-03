@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  border:none;
 }
 
 .column-container--create {
@@ -15,6 +16,7 @@
   justify-content: center;
   background-color: #23232f;
   padding: 4rem;
+  cursor: pointer;
 }
 
 .column-container--create h2 {
