@@ -17,18 +17,18 @@
 
 .modal-content {
   background-color: #2c2c38;
-  padding:2rem;
+  padding: 2rem;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   max-width: 25vw;
   max-height: 25vh;
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
 .modal-content h2 {
   text-align: center;
-  font-size:2rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -63,9 +63,9 @@
 }
 
 .modal-content button {
-  padding:1rem;
-  background-color: #6360C7;
-  color:white;
+  padding: 1rem;
+  background-color: #6360c7;
+  color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;

@@ -2,11 +2,8 @@ import PropTypes from "prop-types";
 import { BoardContext } from "../../contexts/BoardContext";
 import { useContext } from "react";
 
-
 const SidebarTitle = ({ name, isActive, setShowModal }) => {
-
-  const { setActiveBoard, findBoardByName } =
-    useContext(BoardContext);
+  const { setActiveBoard, findBoardByName } = useContext(BoardContext);
   const className =
     name === "+Create new Board"
       ? "sidebar__title--create"

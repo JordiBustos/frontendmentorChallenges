@@ -2,7 +2,7 @@
   background-color: #2c2c38;
   flex-basis: 10%;
   border-right: 2px solid #3e3e4a;
-  height:100vh;
+  height: 100vh;
 }
 
 .sidebar__header {
@@ -50,7 +50,7 @@
 }
 
 .sidebar__title--active {
-  background-color: #645FC6;
+  background-color: #645fc6;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
 }
@@ -61,8 +61,8 @@
 }
 
 .sidebar__button {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   background-color: transparent;
   border: none;
   cursor: pointer;

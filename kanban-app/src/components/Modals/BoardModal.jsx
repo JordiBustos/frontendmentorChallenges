@@ -6,10 +6,6 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
   const [inputValue, setInputValue] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
   return (
     <div className={`modal ${isOpen ? "open" : ""}`}>
       <div className="modal-content">
@@ -29,12 +25,14 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
             )
           }
         >
-          <label htmlFor="textInput">{isNewBoard ? "Board Name:" : "Column Name:"}</label>
+          <label htmlFor="textInput">
+            {isNewBoard ? "Board Name:" : "Column Name:"}
+          </label>
           <input
             type="text"
             id="textInput"
             value={inputValue}
-            onChange={handleInputChange}
+            onChange={(e) => handleInputChange(e, setInputValue)}
             placeholder="Enter column name..."
           />
           {validationMessage && <p className="error">{validationMessage}</p>}
@@ -67,6 +65,10 @@ function handleSubmit(
     setInputValue("");
     onClose();
   } else setValidationMessage("Please enter a board name");
+}
+
+function handleInputChange(e, setInputValue) {
+  setInputValue(e.target.value);
 }
 
 export default BoardModal;

@@ -52,7 +52,7 @@ const BoardProvider = ({ children }) => {
         returnActiveColumns,
         findBoardByName,
         createNewBoard,
-        createNewColumnInActiveBoard
+        createNewColumnInActiveBoard,
       }}
     >
       {children}

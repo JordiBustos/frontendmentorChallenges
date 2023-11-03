@@ -27,7 +27,7 @@ const Column = ({ name, tasks, setShowModal }) => {
               <ul className="column-card-container">{createTasks(tasks)}</ul>
             </section>
           ) : (
-            <h2 className="column__name--create">{name} (0 tasks)</h2>
+            <h3 className="column__name">{name} (0 tasks)</h3>
           )}
         </div>
       )}
@@ -38,7 +38,7 @@ const Column = ({ name, tasks, setShowModal }) => {
 Column.propTypes = {
   name: PropTypes.string.isRequired,
   tasks: PropTypes.array.isRequired,
-  setShowModal: PropTypes.func
+  setShowModal: PropTypes.func,
 };
 
 function createTasks(tasks) {
