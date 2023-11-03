@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
+import { useContext } from "react";
 
-const SidebarTitle = ({ name, isActive }) => {
-  const { setActiveBoard, findBoardByName } = useContext(BoardContext);
+
+const SidebarTitle = ({ name, isActive, setShowModal }) => {
+
+  const { setActiveBoard, findBoardByName } =
+    useContext(BoardContext);
   const className =
     name === "+Create new Board"
       ? "sidebar__title--create"
@@ -11,30 +14,53 @@ const SidebarTitle = ({ name, isActive }) => {
       ? "sidebar__title--active"
       : "sidebar__title";
 
-  const renderTitle = () => {
-    const isCreateNewBoard = name === "+Create new Board";
-
-    const titleContent = (
-      <>
-        <img src="icon-board.svg" alt="board icon" className="sidebar__icon" />
-        <h3>{name}</h3>
-      </>
-    );
-
-    if (isCreateNewBoard) return titleContent;
-    return (
-      <button className="sidebar__button" onClick={() => setActiveBoard(findBoardByName(name))}>
-        {titleContent}
-      </button>
-    );
-  };
-
-  return <div className={className}>{renderTitle()}</div>;
+  return (
+    <div className={className}>
+      {renderTitle(name, setActiveBoard, findBoardByName, setShowModal)}
+    </div>
+  );
 };
+
+function renderTitle(name, setActiveBoard, findBoardByName, setShowModal) {
+  const isCreateNewBoard = name === "+Create new Board";
+
+  const titleContent = (
+    <>
+      <img src="icon-board.svg" alt="board icon" className="sidebar__icon" />
+      <h3>{name}</h3>
+    </>
+  );
+
+  const fn = createButtonFn(
+    isCreateNewBoard,
+    setShowModal,
+    setActiveBoard,
+    findBoardByName,
+    name
+  );
+
+  return (
+    <button className="sidebar__button" onClick={fn}>
+      {titleContent}
+    </button>
+  );
+}
+
+function createButtonFn(
+  isCreateNewBoard,
+  setShowModal,
+  setActiveBoard,
+  findBoardByName,
+  name
+) {
+  if (isCreateNewBoard) return () => setShowModal(true);
+  return () => setActiveBoard(findBoardByName(name));
+}
 
 SidebarTitle.propTypes = {
   name: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func,
 };
 
 export default SidebarTitle;

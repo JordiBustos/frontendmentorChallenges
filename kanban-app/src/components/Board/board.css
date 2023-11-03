@@ -5,4 +5,6 @@
   flex-basis: 90%;
   justify-content: space-between;
   background-color: #21212d;
+  height: 90vh;
+  overflow-y: auto;
 }

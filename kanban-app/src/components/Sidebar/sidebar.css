@@ -21,6 +21,7 @@
   text-align: left;
   align-items: center;
   gap: 0.9rem;
+  text-transform: capitalize;
 }
 
 .sidebar__title img,

@@ -5,17 +5,26 @@ import data from "../data.json";
 const BoardContext = React.createContext();
 
 const BoardProvider = ({ children }) => {
-  const defaultActiveBoard = data.boards[0];
-  const boardNames = data.boards.map((board) => board.name);
-
-  const [activeBoard, setActiveBoard] = useState(defaultActiveBoard);
+  const [boards, setBoards] = useState(data.boards);
+  const [activeBoard, setActiveBoard] = useState(boards[0]);
+  const boardNames = boards.map((board) => board.name);
 
   function findBoardByName(name) {
-    return data.boards.find((board) => board.name === name);
+    return boards.find((board) => board.name === name);
   }
 
   function returnActiveColumns() {
     return activeBoard.columns;
+  }
+
+  function createNewBoard(name) {
+    const newBoard = {
+      name,
+      columns: [],
+      isActive: false,
+    };
+    setBoards([...boards, newBoard]);
+    setActiveBoard(newBoard);
   }
 
   return (
@@ -27,6 +36,7 @@ const BoardProvider = ({ children }) => {
         data,
         returnActiveColumns,
         findBoardByName,
+        createNewBoard
       }}
     >
       {children}
