@@ -13,19 +13,7 @@ const Column = ({ name, tasks }) => {
           <h3 className="column__name">
             {name} ({tasks.length})
           </h3>
-          <ul className="column-card-container">
-            {tasks.map((task) => {
-              return (
-                <Card
-                  title={task.title}
-                  description={task.description}
-                  subtasks={task.subtasks}
-                  status={task.status}
-                  key={task.title}
-                />
-              );
-            })}
-          </ul>
+          <ul className="column-card-container">{createTasks(tasks)}</ul>
         </section>
       ) : (
         <h2 className="column__name--create">{name}</h2>
@@ -38,5 +26,19 @@ Column.propTypes = {
   name: PropTypes.string.isRequired,
   tasks: PropTypes.array.isRequired,
 };
+
+function createTasks(tasks) {
+  return tasks.map((task) => {
+    return (
+      <Card
+        title={task.title}
+        description={task.description}
+        subtasks={task.subtasks}
+        status={task.status}
+        key={task.title}
+      />
+    );
+  });
+}
 
 export default Column;

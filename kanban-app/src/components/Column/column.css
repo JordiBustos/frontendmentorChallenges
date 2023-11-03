@@ -13,19 +13,19 @@
 .column-container--create {
   align-items: center;
   justify-content: center;
-  background-color: #23232F;
+  background-color: #23232f;
   padding: 4rem;
 }
 
 .column-container--create h2 {
   font-size: 2rem;
-  color: #858EA2;
+  color: #858ea2;
 }
 
 .column__name {
   margin-left: 2.5rem;
-  color: #858EA2;
-  font-size:1rem;
+  color: #858ea2;
+  font-size: 1rem;
   letter-spacing: 2px;
 }
 

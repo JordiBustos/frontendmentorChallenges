@@ -2,17 +2,12 @@ import PropTypes from "prop-types";
 import "./card.css";
 
 // eslint-disable-next-line no-unused-vars
-const Card = ({title, description, subtasks, status }) => {
+const Card = ({ title, description, subtasks, status }) => {
   const totalSubtasks = subtasks.length;
-  let totalSubtasksCompleted = 0;
-  subtasks.forEach(subtask => {
-    if (subtask.isCompleted) {
-      totalSubtasksCompleted++;      
-    }
-  });
+  const totalSubtasksCompleted = computeSubtasksCompleted(subtasks);
 
   return (
-    <div className="card">
+    <li className="card">
       <div className="card__header">
         <h2 className="card__title">{title}</h2>
       </div>
@@ -21,15 +16,19 @@ const Card = ({title, description, subtasks, status }) => {
           {totalSubtasksCompleted} of {totalSubtasks} substasks
         </p>
       </div>
-    </div>
+    </li>
   );
 };
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  subtasks: PropTypes.array.isRequired, 
+  subtasks: PropTypes.array.isRequired,
   status: PropTypes.string.isRequired,
 };
+
+function computeSubtasksCompleted(subtasks) {
+  return subtasks.filter((subtask) => subtask.isCompleted).length;
+}
 
 export default Card;
