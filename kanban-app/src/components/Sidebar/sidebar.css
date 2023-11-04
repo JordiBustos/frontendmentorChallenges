@@ -51,8 +51,8 @@
 
 .sidebar__title--active {
   background-color: #645fc6;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
+  border-radius: 0px 3rem 3rem 0px;
+  width:90%
 }
 
 .sidebar__title--active img,
