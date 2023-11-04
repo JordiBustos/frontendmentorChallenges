@@ -17,6 +17,8 @@
   background-color: #23232f;
   padding: 4rem;
   cursor: pointer;
+  margin-top: 3rem;
+  border-radius:1rem;
 }
 
 .column-container--create h2 {
@@ -29,8 +31,17 @@
   color: #858ea2;
   font-size: 1rem;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.column__name {
-  text-transform: uppercase;
+.column__name::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  -moz-border-radius: 7.5px;
+  -webkit-border-radius: 7.5px;
+  border-radius: 7.5px;
+  margin-right: 1rem;
+  background-color: #8571F8;
 }

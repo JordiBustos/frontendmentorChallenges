@@ -20,12 +20,14 @@ const Sidebar = () => {
         <h3 className="sidebar__subtitle">ALL BOARDS ({boardNamesLength})</h3>
       </div>
       {createBoardLinks(boardNames, activeBoard, setShowModal)}
-      <BoardModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onSubmit={(name) => createNewBoard(name)}
-        isNewBoard={true}
-      />
+      {showModal && (
+        <BoardModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          onSubmit={(name) => createNewBoard(name)}
+          isNewBoard={true}
+        />
+      )}
     </div>
   );
 };

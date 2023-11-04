@@ -11,12 +11,12 @@ const Column = ({ name, tasks, setShowModal }) => {
   return (
     <>
       {isNewColumn ? (
-        <button
+        <div
           className={classNameContainer}
           onClick={() => setShowModal(true)}
         >
           <h2 className="column__name--create">{name}</h2>
-        </button>
+        </div>
       ) : (
         <div className={classNameContainer}>
           <section>

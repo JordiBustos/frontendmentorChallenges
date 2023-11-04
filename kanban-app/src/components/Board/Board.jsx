@@ -15,12 +15,14 @@ const Board = () => {
       <div className="board-container">
         {createColumns(columns, setShowModal)}
       </div>
-      <BoardModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onSubmit={(name) => createNewColumnInActiveBoard(name)}
-        isNewBoard={false}
-      />
+      {showModal && (
+        <BoardModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          onSubmit={(name) => createNewColumnInActiveBoard(name)}
+          isNewBoard={false}
+        />
+      )}
     </>
   );
 };

@@ -36,10 +36,17 @@
 
 .sidebar__title--create {
   margin-top: 1rem;
-  color: #615ea1;
 }
 
-.sidebar__title--create h3,
+.sidebar__title--create h3 {
+  color: #615ea1;  
+  font-size: 1rem;
+}
+
+.sidebar__title--create img {
+  filter: invert(39%) sepia(55%) saturate(456%) hue-rotate(204deg) brightness(88%) contrast(71%);
+}
+
 .sidebar__title h3,
 .sidebar__subtitle {
   color: #858ea2;

@@ -293,7 +293,7 @@
           "tasks": [
             {
               "title": "Plan Product Hunt launch",
-              "description": "",
+              "description": "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
               "status": "Todo",
               "subtasks": [
                 {

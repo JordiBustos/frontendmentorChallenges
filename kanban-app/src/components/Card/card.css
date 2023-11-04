@@ -6,6 +6,12 @@
   box-shadow: 0px 4px 8px rgba(44, 44, 56, 0.2);
 }
 
+.button-card {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .card__title,
 .card__text {
   text-align: left;
