@@ -23,7 +23,7 @@ const BoardProvider = ({ children }) => {
       columns: [],
       isActive: false,
     };
-    if (!boards.find((board) => board.name.toLowerCase() === name.toLowerCase())) {
+    if (!checkIfIsInArray(boards, name)) {
       setBoards([...boards, newBoard]);
       setActiveBoard(newBoard);
       return true;
