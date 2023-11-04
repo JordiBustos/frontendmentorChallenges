@@ -61,9 +61,10 @@ function handleSubmit(
 ) {
   e.preventDefault();
   if (inputValue !== "") {
-    onSubmit(inputValue);
+    const response = onSubmit(inputValue);
     setInputValue("");
-    onClose();
+    if (response) onClose();
+    else setValidationMessage("The name is already in use");
   } else setValidationMessage("Please enter a board name");
 }
 

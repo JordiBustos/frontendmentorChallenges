@@ -23,24 +23,33 @@ const BoardProvider = ({ children }) => {
       columns: [],
       isActive: false,
     };
-    setBoards([...boards, newBoard]);
-    setActiveBoard(newBoard);
+    if (!boards.find((board) => board.name.toLowerCase() === name.toLowerCase())) {
+      setBoards([...boards, newBoard]);
+      setActiveBoard(newBoard);
+      return true;
+    } 
+    return false;
   }
 
   function createNewColumnInActiveBoard(columnName) {
-    const updatedBoards = boards.map((board) => {
-      if (board.name === activeBoard.name) {
-        const newColumn = {
-          name: columnName,
-          tasks: [],
-        };
-        const updatedColumns = [...board.columns, newColumn];
-        setActiveBoard({ ...board, columns: updatedColumns });
-        return { ...board, columns: updatedColumns };
+    const activeBoardIndex = boards.findIndex((board) => board.name === activeBoard.name);
+  
+    if (activeBoardIndex !== -1) {
+      const activeBoardCopy = { ...boards[activeBoardIndex] };
+      const newColumn = {
+        name: columnName,
+        tasks: [],
+      };
+  
+      if (!checkIfIsInArray(activeBoardCopy.columns, columnName)) {
+        activeBoardCopy.columns.push(newColumn);
+        const updatedBoards = [...boards];
+        updatedBoards[activeBoardIndex] = activeBoardCopy;
+        setBoards(updatedBoards);
+        return true;
       }
-      return board;
-    });
-    setBoards(updatedBoards);
+    }
+    return false;
   }
 
   return (
@@ -63,5 +72,9 @@ const BoardProvider = ({ children }) => {
 BoardProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+function checkIfIsInArray(array, name) {
+  return array.some((element) => element.name.toLowerCase() === name.toLowerCase());
+}
 
 export { BoardContext, BoardProvider };

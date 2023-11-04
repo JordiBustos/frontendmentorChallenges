@@ -19,16 +19,12 @@ const Column = ({ name, tasks, setShowModal }) => {
         </button>
       ) : (
         <div className={classNameContainer}>
-          {tasks.length > 0 ? (
-            <section>
-              <h3 className="column__name">
-                {name} ({tasks.length})
-              </h3>
-              <ul className="column-card-container">{createTasks(tasks)}</ul>
-            </section>
-          ) : (
-            <h3 className="column__name">{name} (0 tasks)</h3>
-          )}
+          <section>
+            <h3 className="column__name">
+              {name} ({tasks.length})
+            </h3>
+            <ul className="column-card-container">{createTasks(tasks)}</ul>
+          </section>
         </div>
       )}
     </>
