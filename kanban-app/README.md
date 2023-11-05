@@ -39,3 +39,11 @@ Want some support on the challenge? [Join our Slack community](https://www.front
 - Tasks
   - Adding a new task adds it to the bottom of the relevant column.
   - Updating a task's status will move the task to the relevant column. If you're taking on the drag and drop bonus, dragging a task to a different column will also update the status.
+
+
+TODO:
+
+- Edit board title and remove columns functionality
+- Handle no boards view
+- Mobile css
+- Disable add task button if no columns
