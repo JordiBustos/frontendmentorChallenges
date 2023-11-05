@@ -9,7 +9,7 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
 
   return (
     <Modal
-      title={isNewBoard ? "Board Name:" : "Column Name:"}
+      title={isNewBoard ? "Board Name" : "Column Name"}
       isOpen={isOpen}
       onClose={onClose}
       isBoardModal={true}
