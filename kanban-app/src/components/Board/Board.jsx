@@ -11,7 +11,7 @@ const Board = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
+    <section>
       <div className="board-container">
         {createColumns(columns, setShowModal)}
       </div>
@@ -23,7 +23,7 @@ const Board = () => {
           isNewBoard={false}
         />
       )}
-    </>
+    </section>
   );
 };
 

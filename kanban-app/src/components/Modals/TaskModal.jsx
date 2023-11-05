@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
 import { computeSubtasksCompleted } from "../../utils/lib";
 import { createStatusDropdown } from "../../utils/formUtils";
-import "./modal.css";
+import Modal from "./Modal";
 
 const TaskModal = ({
   isOpen,
@@ -19,37 +19,35 @@ const TaskModal = ({
     useContext(BoardContext);
 
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content">
-        <h2>{title}</h2>
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
-        <p>{description}</p>
-        <form
-          onSubmit={(e) =>
-            handleSubmit(
-              e,
-              title,
-              description,
-              updateCardStatusAndSubtasks,
-              onClose,
-              currentSubtasks,
-              currentStatus
-            )
-          }
-        >
-          <h3>Subtasks {computeCompletedOutOfTotal(currentSubtasks)}</h3>
-          {createSubtasksCheckboxes(
+    <Modal title={title} isOpen={isOpen} onClose={onClose}>
+      <p>{description}</p>
+      <form
+        onSubmit={(e) =>
+          handleSubmit(
+            e,
+            title,
+            description,
+            updateCardStatusAndSubtasks,
+            onClose,
             currentSubtasks,
-            handleCheckboxChange,
-            setCurrentSubtasks
-          )}
-          {createStatusDropdown(currentStatus, setCurrentStatus, returnActiveColumns())}
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
+            currentStatus
+          )
+        }
+      >
+        <h3>Subtasks {computeCompletedOutOfTotal(currentSubtasks)}</h3>
+        {createSubtasksCheckboxes(
+          currentSubtasks,
+          handleCheckboxChange,
+          setCurrentSubtasks
+        )}
+        {createStatusDropdown(
+          currentStatus,
+          setCurrentStatus,
+          returnActiveColumns()
+        )}
+        <button type="submit">Submit</button>
+      </form>
+    </Modal>
   );
 };
 
@@ -63,7 +61,7 @@ TaskModal.propTypes = {
 };
 
 function handleCheckboxChange(e, i, subtasks, setCurrentSubtasks) {
-  const updatedSubtasks = [...subtasks]; // Create a new array to avoid mutating the original state
+  const updatedSubtasks = [...subtasks];
   updatedSubtasks[i].isCompleted = !updatedSubtasks[i].isCompleted;
   setCurrentSubtasks(updatedSubtasks);
 }
@@ -111,7 +109,12 @@ function handleSubmit(
   currentStatus
 ) {
   e.preventDefault();
-  updateCardStatusAndSubtasks(title, description, currentSubtasks, currentStatus);
+  updateCardStatusAndSubtasks(
+    title,
+    description,
+    currentSubtasks,
+    currentStatus
+  );
   onClose();
 }
 

@@ -10,7 +10,7 @@ const Card = ({ title, description, subtasks, status }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
+    <article>
       <div className="button-card" onClick={() => setShowModal(true)}>
         <li className="card">
           <div className="card__header">
@@ -33,7 +33,7 @@ const Card = ({ title, description, subtasks, status }) => {
           status={status}
         />
       )}
-    </>
+    </article>
   );
 };
 

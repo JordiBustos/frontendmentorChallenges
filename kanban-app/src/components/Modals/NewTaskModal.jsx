@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
 import { createTextInput, createStatusDropdown } from "../../utils/formUtils";
-import "./modal.css";
+import Modal from "./Modal";
 
 const NewTaskModal = ({ isOpen, onClose }) => {
   const { returnActiveColumns, createTask } = useContext(BoardContext);
@@ -45,43 +45,33 @@ const NewTaskModal = ({ isOpen, onClose }) => {
   }
 
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content new-task-modal-content">
-        <h2>Add New Task</h2>
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
-        <form onSubmit={handleSubmit}>
-          {createTextInput("Title", "title", title, setTitle, "column")}
-          {createTextInput(
-            "Description",
-            "description",
-            description,
-            setDescription,
-            "column"
-          )}
-          <h3>Subtasks: </h3>
-          {createNewSubtaskField(
-            inputFields,
-            handleInputChange,
-            deleteSubtasks
-          )}
-          <button
-            className="add-new-subtasks"
-            type="button"
-            onClick={addInputField}
-          >
-            +Add New Subtasks
-          </button>
-          {createStatusDropdown(
-            currentStatus,
-            setCurrentStatus,
-            returnActiveColumns()
-          )}
-          <button type="submit">Create task</button>
-        </form>
-      </div>
-    </div>
+    <Modal title={"Add New Task"} isOpen={isOpen} onClose={onClose}>
+      <form onSubmit={handleSubmit}>
+        {createTextInput("Title", "title", title, setTitle, "column")}
+        {createTextInput(
+          "Description",
+          "description",
+          description,
+          setDescription,
+          "column"
+        )}
+        <h3>Subtasks: </h3>
+        {createNewSubtaskField(inputFields, handleInputChange, deleteSubtasks)}
+        <button
+          className="add-new-subtasks"
+          type="button"
+          onClick={addInputField}
+        >
+          +Add New Subtasks
+        </button>
+        {createStatusDropdown(
+          currentStatus,
+          setCurrentStatus,
+          returnActiveColumns()
+        )}
+        <button type="submit">Create task</button>
+      </form>
+    </Modal>
   );
 };
 
