@@ -60,15 +60,19 @@
   font-size: 16px;
 }
 
-.modal-content button {
+.modal-content button[type=submit],
+.add-new-subtasks {
   padding: 1rem;
-  background-color: #6360c7;
-  color: white;
   border: none;
   border-radius: 2rem;
   font-size: 1rem;
   cursor: pointer;
   width:100%;
+}
+
+.modal-content button[type=submit] {
+  background-color: #6360c7;
+  color: white;
 }
 
 .add-new-subtasks {
