@@ -1,4 +1,4 @@
-function createTextInput(label, id, value, onChange, className = "") {
+function createTextInput(label, id, value, onChange, className = "", placeholder = "") {
   return (
     <div className={className === "column" ? className : ""}>
       <label htmlFor={id}>{label}</label>
@@ -7,6 +7,7 @@ function createTextInput(label, id, value, onChange, className = "") {
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
       />
     </div>
   );
