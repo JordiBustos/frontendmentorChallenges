@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { checkIfIsInArray } from "../utils/lib";
 import PropTypes from "prop-types";
 import data from "../data.json";
 
@@ -52,7 +53,12 @@ const BoardProvider = ({ children }) => {
     return false;
   }
 
-  function updateCardStatusAndSubtasks(cardTitle, description, completedSubtasks, newStatus) {
+  function updateCardStatusAndSubtasks(
+    cardTitle,
+    description,
+    completedSubtasks,
+    newStatus
+  ) {
     const newTask = {
       title: cardTitle,
       status: newStatus,
@@ -62,15 +68,23 @@ const BoardProvider = ({ children }) => {
 
     const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
     const activeColumns = boards[activeBoardIndex].columns;
-    const currentColumnIndex = activeColumns.findIndex(column => column.tasks.some(task => task.title === cardTitle));
-    const currentTaskInColumnIndex = activeColumns[currentColumnIndex].tasks.findIndex(task => task.title === cardTitle);
+    const currentColumnIndex = activeColumns.findIndex((column) =>
+      column.tasks.some((task) => task.title === cardTitle)
+    );
+    const currentTaskInColumnIndex = activeColumns[
+      currentColumnIndex
+    ].tasks.findIndex((task) => task.title === cardTitle);
     const newBoard = [...boards];
-    const newColumnIndex = activeColumns.findIndex(column => column.name === newStatus);
-    newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.splice(currentTaskInColumnIndex, 1)
+    const newColumnIndex = activeColumns.findIndex(
+      (column) => column.name === newStatus
+    );
+    newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.splice(
+      currentTaskInColumnIndex,
+      1
+    );
     newBoard[activeBoardIndex].columns[newColumnIndex].tasks.push(newTask);
     setBoards(newBoard);
   }
-  
 
   return (
     <BoardContext.Provider
@@ -82,7 +96,7 @@ const BoardProvider = ({ children }) => {
         findBoardByName,
         createNewBoard,
         createNewColumnInActiveBoard,
-        updateCardStatusAndSubtasks
+        updateCardStatusAndSubtasks,
       }}
     >
       {children}
@@ -94,16 +108,8 @@ BoardProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function checkIfIsInArray(array, name) {
-  return array.some(
-    (element) => element.name.toLowerCase() === name.toLowerCase()
-  );
-}
-
-function findBoardIndex (boards, name) {
-  return boards.findIndex(
-    (board) => board.name === name
-  );
+function findBoardIndex(boards, name) {
+  return boards.findIndex((board) => board.name === name);
 }
 
 export { BoardContext, BoardProvider };
