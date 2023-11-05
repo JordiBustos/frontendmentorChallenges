@@ -1,7 +1,10 @@
-.column-container,
-.column-container--create {
-  max-width: calc(100vw / 5 - 2rem);
+.column-container {
+  width:20vw;
 }
+
+.column-container--create {
+  width: calc(15vw - 8rem - 2rem);
+} 
 
 .column-card-container,
 .column-container--create {
