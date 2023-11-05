@@ -14,20 +14,7 @@ const CardModal = ({
 }) => {
   const [validationMessage, setValidationMessage] = useState("");
   const [currentStatus, setCurrentStatus] = useState(status);
-
-  const [currentSubtasksCompletion, setCurrentSubtasksCompletion] = useState(
-    subtasks.map((subtask) => {
-      return { [subtask.title]: subtask.isCompleted };
-    })
-  );
-
-  
-
-  function handleCheckboxChange(e) {
-    const { name, checked } = e.target;
-    setCurrentSubtasksCompletion({ ...currentSubtasksCompletion, [name]: checked });
-  }
-
+  const [currentSubtasks, setCurrentSubtasks] = useState(subtasks);
   const { returnActiveColumns } = useContext(BoardContext);
   const columnsName = returnActiveColumns();
 
@@ -45,7 +32,7 @@ const CardModal = ({
           }
         >
           <h3>Subtasks</h3>
-          {createSubtasksCheckboxes(subtasks, handleCheckboxChange, currentSubtasksCompletion)}
+          {createSubtasksCheckboxes(currentSubtasks, handleCheckboxChange, setCurrentSubtasks)}
           {createStatusDropdown(currentStatus, setCurrentStatus, columnsName)}
           {validationMessage && <p className="error">{validationMessage}</p>}
 
@@ -66,17 +53,28 @@ CardModal.propTypes = {
   status: PropTypes.string.isRequired,
 };
 
-function createSubtasksCheckboxes(subtasks, handleCheckboxChange, currentSubtasksCompletion) {
+function handleCheckboxChange(e, i, subtasks, setCurrentSubtasks) {
+  const updatedSubtasks = [...subtasks]; // Create a new array to avoid mutating the original state
+  updatedSubtasks[i].isCompleted = !updatedSubtasks[i].isCompleted;
+  setCurrentSubtasks(updatedSubtasks);
+}
+
+function createSubtasksCheckboxes(subtasks, handleCheckboxChange, setCurrentSubtasks) {
   return subtasks.map((subtask, i) => {
     return (
-      <div className={`modal-checkbox-container ${currentSubtasksCompletion[subtask.title] ? "completed" : ""}`} key={i}>
+      <div
+        className={`modal-checkbox-container${
+          subtask.isCompleted ? " completed" : ""
+        }`}
+        key={i}
+      >
         <input
           type="checkbox"
           id={subtask.title}
           name={subtask.title}
           value={subtask.title}
-          defaultChecked={subtask.isCompleted}
-          onChange={handleCheckboxChange}
+          checked={subtask.isCompleted}
+          onChange={(e) => handleCheckboxChange(e, i, subtasks, setCurrentSubtasks)}
         />
         <label htmlFor={subtask.title}>{subtask.title}</label>
       </div>
