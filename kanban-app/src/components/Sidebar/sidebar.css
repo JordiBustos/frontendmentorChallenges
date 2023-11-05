@@ -39,12 +39,13 @@
 }
 
 .sidebar__title--create h3 {
-  color: #615ea1;  
+  color: #615ea1;
   font-size: 1rem;
 }
 
 .sidebar__title--create img {
-  filter: invert(39%) sepia(55%) saturate(456%) hue-rotate(204deg) brightness(88%) contrast(71%);
+  filter: invert(39%) sepia(55%) saturate(456%) hue-rotate(204deg)
+    brightness(88%) contrast(71%);
 }
 
 .sidebar__title h3,
@@ -59,7 +60,7 @@
 .sidebar__title--active {
   background-color: #645fc6;
   border-radius: 0px 3rem 3rem 0px;
-  width:90%
+  width: 90%;
 }
 
 .sidebar__title--active img,

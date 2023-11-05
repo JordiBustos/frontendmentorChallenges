@@ -9,19 +9,24 @@ const NewTaskModal = ({ isOpen, onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [inputFields, setInputFields] = useState([""]);
-  const [currentStatus, setCurrentStatus] = useState(returnActiveColumns()[0].name);
+  const [currentStatus, setCurrentStatus] = useState(
+    returnActiveColumns()[0].name
+  );
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     const newTask = {
       title,
       description,
-      subtasks: inputFields.map((subtask) => ({ title: subtask, isCompleted: false })),
+      subtasks: inputFields.map((subtask) => ({
+        title: subtask,
+        isCompleted: false,
+      })),
       status: currentStatus,
-    }
+    };
     createTask(newTask);
     onClose();
-  };
+  }
 
   function addInputField() {
     setInputFields([...inputFields, ""]);
@@ -61,10 +66,18 @@ const NewTaskModal = ({ isOpen, onClose }) => {
             handleInputChange,
             deleteSubtasks
           )}
-          <button className="add-new-subtasks" type="button" onClick={addInputField}>
+          <button
+            className="add-new-subtasks"
+            type="button"
+            onClick={addInputField}
+          >
             +Add New Subtasks
           </button>
-          {createStatusDropdown(currentStatus, setCurrentStatus, returnActiveColumns())}
+          {createStatusDropdown(
+            currentStatus,
+            setCurrentStatus,
+            returnActiveColumns()
+          )}
           <button type="submit">Create task</button>
         </form>
       </div>

@@ -11,10 +11,7 @@ const Column = ({ name, tasks, setShowModal }) => {
   return (
     <>
       {isNewColumn ? (
-        <div
-          className={classNameContainer}
-          onClick={() => setShowModal(true)}
-        >
+        <div className={classNameContainer} onClick={() => setShowModal(true)}>
           <h2 className="column__name--create">{name}</h2>
         </div>
       ) : (

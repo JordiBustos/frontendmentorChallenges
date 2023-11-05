@@ -8,7 +8,4 @@ function checkIfIsInArray(array, name) {
   );
 }
 
-export {
-  computeSubtasksCompleted,
-  checkIfIsInArray
-}
+export { computeSubtasksCompleted, checkIfIsInArray };

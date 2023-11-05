@@ -16,13 +16,12 @@
   font-size: 2rem;
 }
 
-
 .new-task-button {
-  background-color: #645FC6;
+  background-color: #645fc6;
   border: none;
   color: white;
   border: none;
-  padding:1.2rem 2rem;
+  padding: 1.2rem 2rem;
   font-size: 1.3rem;
   font-weight: bold;
   border-radius: 2rem;

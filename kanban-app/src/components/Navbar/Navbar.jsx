@@ -10,7 +10,9 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <h1>{activeBoard.name}</h1>
-        <button onClick={() => setShowModal(true)} className="new-task-button">+Add New Task</button>
+        <button onClick={() => setShowModal(true)} className="new-task-button">
+          +Add New Task
+        </button>
       </div>
       {showModal && (
         <NewTaskModal isOpen={showModal} onClose={() => setShowModal(false)} />
