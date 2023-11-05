@@ -86,6 +86,17 @@ const BoardProvider = ({ children }) => {
     setBoards(newBoard);
   }
 
+  function createTask(newTask) {
+    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
+    const activeColumns = boards[activeBoardIndex].columns;
+    const currentColumnIndex = activeColumns.findIndex(
+      (column) => column.name === newTask.status
+    );
+    const newBoard = [...boards];
+    newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.push(newTask);
+    setBoards(newBoard);
+  }
+
   return (
     <BoardContext.Provider
       value={{
@@ -97,6 +108,7 @@ const BoardProvider = ({ children }) => {
         createNewBoard,
         createNewColumnInActiveBoard,
         updateCardStatusAndSubtasks,
+        createTask,
       }}
     >
       {children}

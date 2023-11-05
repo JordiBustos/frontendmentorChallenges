@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { createTextInput } from "../../utils/formUtils";
 import "./modal.css";
 
 const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
@@ -8,7 +9,7 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
 
   return (
     <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content">
+      <div className="modal-content board-modal-content">
         <h2>{isNewBoard ? "Board Name:" : "Column Name:"}</h2>
         <span className="close" onClick={onClose}>
           &times;
@@ -25,16 +26,12 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
             )
           }
         >
-          <label htmlFor="textInput">
-            {isNewBoard ? "Board Name:" : "Column Name:"}
-          </label>
-          <input
-            type="text"
-            id="textInput"
-            value={inputValue}
-            onChange={(e) => handleInputChange(e, setInputValue)}
-            placeholder="Enter column name..."
-          />
+          {createTextInput(
+            isNewBoard ? "Board Name:" : "Column Name:",
+            "textInput",
+            inputValue,
+            (e) => handleInputChange(e, setInputValue)
+          )}
           {validationMessage && <p className="error">{validationMessage}</p>}
 
           <button type="submit">Submit</button>

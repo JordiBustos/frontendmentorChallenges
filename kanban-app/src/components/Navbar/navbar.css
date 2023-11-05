@@ -4,7 +4,27 @@
   padding: 2.5rem;
 }
 
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .navbar h1 {
   margin: 0;
   font-size: 2rem;
+}
+
+
+.new-task-button {
+  background-color: #645FC6;
+  border: none;
+  color: white;
+  border: none;
+  padding:1.2rem 2rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 2rem;
+  cursor: pointer;
 }

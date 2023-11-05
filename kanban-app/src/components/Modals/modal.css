@@ -41,7 +41,7 @@
 }
 
 /* Form Styles */
-.modal-content form {
+.board-modal-content form div {
   display: flex;
   flex-direction: column;
 }
@@ -65,9 +65,15 @@
   background-color: #6360c7;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 2rem;
   font-size: 1rem;
   cursor: pointer;
+  width:100%;
+}
+
+.add-new-subtasks {
+  color: #6360c7;
+  background-color: white;
 }
 
 .modal-select-container {
@@ -94,3 +100,27 @@
   margin-bottom: 2rem;
 }
 
+
+.subtask-input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.subtask-input-container input {
+  flex-basis: 90%;
+}
+
+.subtask-input-container span {
+  margin-bottom:10px;
+  font-size:3rem;
+  color: #888;
+}

@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
 import { computeSubtasksCompleted } from "../../utils/lib";
+import { createStatusDropdown } from "../../utils/formUtils";
 import "./modal.css";
 
-const CardModal = ({
+const TaskModal = ({
   isOpen,
   onClose,
   title,
@@ -16,7 +17,6 @@ const CardModal = ({
   const [currentSubtasks, setCurrentSubtasks] = useState(subtasks);
   const { returnActiveColumns, updateCardStatusAndSubtasks } =
     useContext(BoardContext);
-  const columnsName = returnActiveColumns();
 
   return (
     <div className={`modal ${isOpen ? "open" : ""}`}>
@@ -45,7 +45,7 @@ const CardModal = ({
             handleCheckboxChange,
             setCurrentSubtasks
           )}
-          {createStatusDropdown(currentStatus, setCurrentStatus, columnsName)}
+          {createStatusDropdown(currentStatus, setCurrentStatus, returnActiveColumns())}
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -53,7 +53,7 @@ const CardModal = ({
   );
 };
 
-CardModal.propTypes = {
+TaskModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -97,27 +97,6 @@ function createSubtasksCheckboxes(
   });
 }
 
-function createStatusDropdown(currentStatus, setCurrentStatus, options) {
-  return (
-    <div className="modal-select-container">
-      <label htmlFor="status">Status</label>
-      <select
-        id="status"
-        className="status-card-select"
-        name="status"
-        value={currentStatus}
-        onChange={(e) => setCurrentStatus(e.target.value)}
-      >
-        {options.map((option) => (
-          <option key={option.name} value={option.name}>
-            {option.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
 function computeCompletedOutOfTotal(subtasks) {
   return `(${computeSubtasksCompleted(subtasks)} of ${subtasks.length})`;
 }
@@ -136,4 +115,4 @@ function handleSubmit(
   onClose();
 }
 
-export default CardModal;
+export default TaskModal;

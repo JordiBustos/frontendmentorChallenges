@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import "./card.css";
 import { useState } from "react";
-import CardModal from "../Modals/CardModal";
+import TaskModal from "../Modals/TaskModal";
 import { computeSubtasksCompleted } from "../../utils/lib";
 
 const Card = ({ title, description, subtasks, status }) => {
@@ -24,7 +24,7 @@ const Card = ({ title, description, subtasks, status }) => {
         </li>
       </div>
       {showModal && (
-        <CardModal
+        <TaskModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           title={title}
