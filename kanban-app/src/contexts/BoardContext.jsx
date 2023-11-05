@@ -32,6 +32,14 @@ const BoardProvider = ({ children }) => {
     return false;
   }
 
+  function deleteActiveBoard() {
+    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
+    const newBoards = [...boards];
+    newBoards.splice(activeBoardIndex, 1);
+    setBoards(newBoards);
+    setActiveBoard(newBoards[0]);
+  }
+
   function createNewColumnInActiveBoard(columnName) {
     const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
 
@@ -109,6 +117,7 @@ const BoardProvider = ({ children }) => {
         createNewColumnInActiveBoard,
         updateCardStatusAndSubtasks,
         createTask,
+        deleteActiveBoard,
       }}
     >
       {children}
