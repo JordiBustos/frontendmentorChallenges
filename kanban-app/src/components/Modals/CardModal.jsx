@@ -31,8 +31,12 @@ const CardModal = ({
             handleSubmit(e, onSubmit, onClose, setValidationMessage)
           }
         >
-          <h3>Subtasks</h3>
-          {createSubtasksCheckboxes(currentSubtasks, handleCheckboxChange, setCurrentSubtasks)}
+          <h3>Subtasks {computeCompletedOutOfTotal(currentSubtasks)}</h3>
+          {createSubtasksCheckboxes(
+            currentSubtasks,
+            handleCheckboxChange,
+            setCurrentSubtasks
+          )}
           {createStatusDropdown(currentStatus, setCurrentStatus, columnsName)}
           {validationMessage && <p className="error">{validationMessage}</p>}
 
@@ -59,7 +63,11 @@ function handleCheckboxChange(e, i, subtasks, setCurrentSubtasks) {
   setCurrentSubtasks(updatedSubtasks);
 }
 
-function createSubtasksCheckboxes(subtasks, handleCheckboxChange, setCurrentSubtasks) {
+function createSubtasksCheckboxes(
+  subtasks,
+  handleCheckboxChange,
+  setCurrentSubtasks
+) {
   return subtasks.map((subtask, i) => {
     return (
       <div
@@ -74,7 +82,9 @@ function createSubtasksCheckboxes(subtasks, handleCheckboxChange, setCurrentSubt
           name={subtask.title}
           value={subtask.title}
           checked={subtask.isCompleted}
-          onChange={(e) => handleCheckboxChange(e, i, subtasks, setCurrentSubtasks)}
+          onChange={(e) =>
+            handleCheckboxChange(e, i, subtasks, setCurrentSubtasks)
+          }
         />
         <label htmlFor={subtask.title}>{subtask.title}</label>
       </div>
@@ -101,6 +111,12 @@ function createStatusDropdown(currentStatus, setCurrentStatus, options) {
       </select>
     </div>
   );
+}
+
+function computeCompletedOutOfTotal(subtasks) {
+  const completed = subtasks.filter((subtask) => subtask.isCompleted).length;
+  const total = subtasks.length;
+  return `(${completed} of ${total})`;
 }
 
 function handleSubmit() {

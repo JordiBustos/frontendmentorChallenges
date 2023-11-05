@@ -20,7 +20,7 @@
   padding: 2rem;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  max-width: 25vw;
+  max-width: 30vw;
   width: 100%;
 }
 
@@ -72,6 +72,8 @@
 
 .modal-select-container {
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-checkbox-container {
@@ -86,8 +88,8 @@
 }
 
 .status-card-select {
-  width: 90%;
-  margin: .5rem auto 3rem auto;
   padding: 1rem;
   font-size: 1rem;
+  margin-bottom: 2rem;
 }
+
