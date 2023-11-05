@@ -69,3 +69,25 @@
   font-size: 1rem;
   cursor: pointer;
 }
+
+.modal-select-container {
+  margin-top: 2rem;
+}
+
+.modal-checkbox-container {
+  background-color: #21212D;
+  padding:1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.status-card-select {
+  width: 90%;
+  margin: .5rem auto 3rem auto;
+  padding: 1rem;
+  font-size: 1rem;
+}

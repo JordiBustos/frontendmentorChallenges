@@ -15,6 +15,19 @@ const CardModal = ({
   const [validationMessage, setValidationMessage] = useState("");
   const [currentStatus, setCurrentStatus] = useState(status);
 
+  const [currentSubtasksCompletion, setCurrentSubtasksCompletion] = useState(
+    subtasks.map((subtask) => {
+      return { [subtask.title]: subtask.isCompleted };
+    })
+  );
+
+  
+
+  function handleCheckboxChange(e) {
+    const { name, checked } = e.target;
+    setCurrentSubtasksCompletion({ ...currentSubtasksCompletion, [name]: checked });
+  }
+
   const { returnActiveColumns } = useContext(BoardContext);
   const columnsName = returnActiveColumns();
 
@@ -31,7 +44,8 @@ const CardModal = ({
             handleSubmit(e, onSubmit, onClose, setValidationMessage)
           }
         >
-          {createSubtasksCheckboxes(subtasks)}
+          <h3>Subtasks</h3>
+          {createSubtasksCheckboxes(subtasks, handleCheckboxChange, currentSubtasksCompletion)}
           {createStatusDropdown(currentStatus, setCurrentStatus, columnsName)}
           {validationMessage && <p className="error">{validationMessage}</p>}
 
@@ -52,16 +66,17 @@ CardModal.propTypes = {
   status: PropTypes.string.isRequired,
 };
 
-function createSubtasksCheckboxes(subtasks) {
+function createSubtasksCheckboxes(subtasks, handleCheckboxChange, currentSubtasksCompletion) {
   return subtasks.map((subtask, i) => {
     return (
-      <div key={i}>
+      <div className={`modal-checkbox-container ${currentSubtasksCompletion[subtask.title] ? "completed" : ""}`} key={i}>
         <input
           type="checkbox"
           id={subtask.title}
           name={subtask.title}
           value={subtask.title}
           defaultChecked={subtask.isCompleted}
+          onChange={handleCheckboxChange}
         />
         <label htmlFor={subtask.title}>{subtask.title}</label>
       </div>
@@ -71,10 +86,11 @@ function createSubtasksCheckboxes(subtasks) {
 
 function createStatusDropdown(currentStatus, setCurrentStatus, options) {
   return (
-    <div>
-      <label htmlFor="status">Status:</label>
+    <div className="modal-select-container">
+      <label htmlFor="status">Status</label>
       <select
         id="status"
+        className="status-card-select"
         name="status"
         value={currentStatus}
         onChange={(e) => setCurrentStatus(e.target.value)}
