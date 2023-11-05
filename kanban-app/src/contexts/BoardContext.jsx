@@ -32,9 +32,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function createNewColumnInActiveBoard(columnName) {
-    const activeBoardIndex = boards.findIndex(
-      (board) => board.name === activeBoard.name
-    );
+    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
 
     if (activeBoardIndex !== -1) {
       const activeBoardCopy = { ...boards[activeBoardIndex] };
@@ -54,6 +52,26 @@ const BoardProvider = ({ children }) => {
     return false;
   }
 
+  function updateCardStatusAndSubtasks(cardTitle, description, completedSubtasks, newStatus) {
+    const newTask = {
+      title: cardTitle,
+      status: newStatus,
+      description: description,
+      subtasks: completedSubtasks,
+    };
+
+    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
+    const activeColumns = boards[activeBoardIndex].columns;
+    const currentColumnIndex = activeColumns.findIndex(column => column.tasks.some(task => task.title === cardTitle));
+    const currentTaskInColumnIndex = activeColumns[currentColumnIndex].tasks.findIndex(task => task.title === cardTitle);
+    const newBoard = [...boards];
+    const newColumnIndex = activeColumns.findIndex(column => column.name === newStatus);
+    newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.splice(currentTaskInColumnIndex, 1)
+    newBoard[activeBoardIndex].columns[newColumnIndex].tasks.push(newTask);
+    setBoards(newBoard);
+  }
+  
+
   return (
     <BoardContext.Provider
       value={{
@@ -64,6 +82,7 @@ const BoardProvider = ({ children }) => {
         findBoardByName,
         createNewBoard,
         createNewColumnInActiveBoard,
+        updateCardStatusAndSubtasks
       }}
     >
       {children}
@@ -78,6 +97,12 @@ BoardProvider.propTypes = {
 function checkIfIsInArray(array, name) {
   return array.some(
     (element) => element.name.toLowerCase() === name.toLowerCase()
+  );
+}
+
+function findBoardIndex (boards, name) {
+  return boards.findIndex(
+    (board) => board.name === name
   );
 }
 

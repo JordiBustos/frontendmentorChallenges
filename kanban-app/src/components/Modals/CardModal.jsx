@@ -1,21 +1,21 @@
 import PropTypes from "prop-types";
 import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
+import { computeSubtasksCompleted } from "../../utils/lib";
 import "./modal.css";
 
 const CardModal = ({
   isOpen,
   onClose,
-  onSubmit,
   title,
   description,
   subtasks,
   status,
 }) => {
-  const [validationMessage, setValidationMessage] = useState("");
   const [currentStatus, setCurrentStatus] = useState(status);
   const [currentSubtasks, setCurrentSubtasks] = useState(subtasks);
-  const { returnActiveColumns } = useContext(BoardContext);
+  const { returnActiveColumns, updateCardStatusAndSubtasks } =
+    useContext(BoardContext);
   const columnsName = returnActiveColumns();
 
   return (
@@ -28,7 +28,15 @@ const CardModal = ({
         <p>{description}</p>
         <form
           onSubmit={(e) =>
-            handleSubmit(e, onSubmit, onClose, setValidationMessage)
+            handleSubmit(
+              e,
+              title,
+              description,
+              updateCardStatusAndSubtasks,
+              onClose,
+              currentSubtasks,
+              currentStatus
+            )
           }
         >
           <h3>Subtasks {computeCompletedOutOfTotal(currentSubtasks)}</h3>
@@ -38,8 +46,6 @@ const CardModal = ({
             setCurrentSubtasks
           )}
           {createStatusDropdown(currentStatus, setCurrentStatus, columnsName)}
-          {validationMessage && <p className="error">{validationMessage}</p>}
-
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -50,7 +56,6 @@ const CardModal = ({
 CardModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   subtasks: PropTypes.array.isRequired,
@@ -114,13 +119,21 @@ function createStatusDropdown(currentStatus, setCurrentStatus, options) {
 }
 
 function computeCompletedOutOfTotal(subtasks) {
-  const completed = subtasks.filter((subtask) => subtask.isCompleted).length;
-  const total = subtasks.length;
-  return `(${completed} of ${total})`;
+  return `(${computeSubtasksCompleted(subtasks)} of ${subtasks.length})`;
 }
 
-function handleSubmit() {
-  // ...
+function handleSubmit(
+  e,
+  title,
+  description,
+  updateCardStatusAndSubtasks,
+  onClose,
+  currentSubtasks,
+  currentStatus
+) {
+  e.preventDefault();
+  updateCardStatusAndSubtasks(title, description, currentSubtasks, currentStatus);
+  onClose();
 }
 
 export default CardModal;

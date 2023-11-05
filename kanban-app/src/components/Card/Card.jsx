@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import "./card.css";
 import { useState } from "react";
 import CardModal from "../Modals/CardModal";
+import { computeSubtasksCompleted } from "../../utils/lib";
 
 const Card = ({ title, description, subtasks, status }) => {
   const totalSubtasks = subtasks.length;
@@ -26,7 +27,6 @@ const Card = ({ title, description, subtasks, status }) => {
         <CardModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
-          onSubmit={() => console.log("TODO")}
           title={title}
           description={description}
           subtasks={subtasks}
@@ -39,13 +39,9 @@ const Card = ({ title, description, subtasks, status }) => {
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   subtasks: PropTypes.array.isRequired,
   status: PropTypes.string.isRequired,
 };
-
-function computeSubtasksCompleted(subtasks) {
-  return subtasks.filter((subtask) => subtask.isCompleted).length;
-}
 
 export default Card;
