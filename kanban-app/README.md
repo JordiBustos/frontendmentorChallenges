@@ -44,3 +44,5 @@ Want some support on the challenge? [Join our Slack community](https://www.front
 TODO:
 
 - Mobile css
+- Delete and edit task
+- Change name to the columns
