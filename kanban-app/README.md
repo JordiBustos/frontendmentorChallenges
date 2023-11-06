@@ -46,3 +46,5 @@ TODO:
 - Mobile css
 - Delete and edit task
 - Change name to the columns
+- Drag and drop
+- Two cards with same name

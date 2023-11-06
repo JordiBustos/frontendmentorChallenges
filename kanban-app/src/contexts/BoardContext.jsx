@@ -101,7 +101,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function createTask(newTask) {
-    const currentColumnIndex = boards[activeBoardIndex].findIndex(
+    const currentColumnIndex = boards[activeBoardIndex].columns.findIndex(
       (column) => column.name === newTask.status
     );
     const newBoard = [...boards];

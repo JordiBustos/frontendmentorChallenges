@@ -8,18 +8,24 @@ import EditBoardModal from "../Modals/EditBoardModal";
 const Navbar = () => {
   const { activeBoard, deleteActiveBoard, editBoard } =
     useContext(BoardContext);
-  const [showModal, setShowModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditBoardModal, setShowEditBoardModal] = useState(false);
+  const [showModal, setShowModal] = useState({
+    newTask: false,
+    deleteBoard: false,
+    editBoard: false,
+  });
 
   function onDelete() {
     deleteActiveBoard();
-    setShowDeleteModal(false);
+    showOrHideModal(false, "deleteBoard")();
   }
 
   function onEdit(name, columnsChecked) {
     editBoard(name, columnsChecked);
-    setShowEditBoardModal(false);
+    showOrHideModal(false, "editBoard")();
+  }
+
+  function showOrHideModal(value, board) {
+    return () => setShowModal((prev) => ({ ...prev, [board]: value }));
   }
 
   return (
@@ -30,19 +36,19 @@ const Navbar = () => {
           {activeBoard && (
             <>
               <button
-                onClick={() => setShowEditBoardModal(true)}
+                onClick={showOrHideModal(true, "editBoard")}
                 className="edit-board-button"
               >
                 Edit Board
               </button>
               <button
-                onClick={() => setShowDeleteModal(true)}
+                onClick={showOrHideModal(true, "deleteBoard")}
                 className="delete-board-button"
               >
                 Delete Board
               </button>
               <button
-                onClick={() => setShowModal(true)}
+                onClick={showOrHideModal(true, "newTask")}
                 className="new-task-button"
               >
                 +Add New Task
@@ -51,20 +57,23 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {showModal && (
-        <NewTaskModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      {showModal.newTask && (
+        <NewTaskModal
+          isOpen={showModal.newTask}
+          onClose={showOrHideModal(false, "newTask")}
+        />
       )}
-      {showDeleteModal && (
+      {showModal.deleteBoard && (
         <ConfirmDeleteModal
-          isOpen={showDeleteModal}
-          onClose={() => setShowDeleteModal(false)}
+          isOpen={showModal.deleteBoard}
+          onClose={showOrHideModal(false, "deleteBoard")}
           onDelete={onDelete}
         />
       )}
-      {showEditBoardModal && (
+      {showModal.editBoard && (
         <EditBoardModal
-          isOpen={showEditBoardModal}
-          onClose={() => setShowEditBoardModal(false)}
+          isOpen={showModal.editBoard}
+          onClose={showOrHideModal(false, "editBoard")}
           onSubmit={(name, columnsChecked) => onEdit(name, columnsChecked)}
           boardName={activeBoard.name}
         />

@@ -15,12 +15,14 @@ import Modal from "./Modal";
 
 const NewTaskModal = ({ isOpen, onClose }) => {
   const { returnActiveColumns, createTask } = useContext(BoardContext);
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [inputFields, setInputFields] = useState([""]);
   const [currentStatus, setCurrentStatus] = useState(
     returnActiveColumns()[0].name
   );
+
   const [randomDescription] = useState(returnRandomDescription());
   const [randomSubtask, setRandomSubtask] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
@@ -40,6 +42,7 @@ const NewTaskModal = ({ isOpen, onClose }) => {
       inputFields,
       currentStatus
     );
+    
     createTask(newTask);
     onClose();
   }
