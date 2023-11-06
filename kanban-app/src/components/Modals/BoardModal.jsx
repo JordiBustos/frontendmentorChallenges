@@ -27,7 +27,7 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
         }
       >
         {createTextInput(
-          isNewBoard ? "Board Name:" : "Column Name:",
+          isNewBoard ? "Board Name" : "Column Name",
           "textInput",
           inputValue,
           setInputValue

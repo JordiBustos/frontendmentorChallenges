@@ -11,7 +11,6 @@ const BoardProvider = ({ children }) => {
     boards.length > 0 ? boards[0] : null
   );
   const boardNames = boards?.map((board) => board.name);
-  const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
 
   function findBoardByName(name) {
     return boards.find((board) => board.name === name);
@@ -36,6 +35,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function deleteActiveBoard() {
+    const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
     const newBoards = [...boards];
     newBoards.splice(activeBoardIndex, 1);
     setBoards(newBoards);
@@ -43,6 +43,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function createNewColumnInActiveBoard(columnName) {
+    const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
     if (activeBoardIndex !== -1) {
       const activeBoardCopy = { ...boards[activeBoardIndex] };
       const newColumn = {
@@ -74,6 +75,7 @@ const BoardProvider = ({ children }) => {
       subtasks: completedSubtasks,
     };
 
+    const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
     const activeColumns = boards[activeBoardIndex].columns;
     const currentColumnIndex = activeColumns.findIndex((column) =>
       column.tasks.some((task) => task.title === cardTitle)
@@ -82,9 +84,9 @@ const BoardProvider = ({ children }) => {
       currentColumnIndex
     ].tasks.findIndex((task) => task.title === cardTitle);
     const newBoard = [...boards];
-    const newColumnIndex = activeColumns.findIndex(
-      (column) => column.name === newStatus
-    );
+    const newColumnIndex = newStatus
+      ? activeColumns.findIndex((column) => column.name === newStatus)
+      : currentColumnIndex;
     newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.splice(
       currentTaskInColumnIndex,
       1
@@ -105,6 +107,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function editBoard(name, columnsChecked) {
+    const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
     const newBoard = [...boards];
     newBoard[activeBoardIndex].name = name;
     if (columnsChecked.length > 0) {
