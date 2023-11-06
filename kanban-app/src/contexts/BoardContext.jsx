@@ -7,8 +7,10 @@ const BoardContext = React.createContext();
 
 const BoardProvider = ({ children }) => {
   const [boards, setBoards] = useState(data.boards);
-  const [activeBoard, setActiveBoard] = useState(boards[0]);
-  const boardNames = boards.map((board) => board.name);
+  const [activeBoard, setActiveBoard] = useState(
+    boards.length > 0 ? boards[0] : null
+  );
+  const boardNames = boards?.map((board) => board.name);
 
   function findBoardByName(name) {
     return boards.find((board) => board.name === name);
@@ -37,7 +39,7 @@ const BoardProvider = ({ children }) => {
     const newBoards = [...boards];
     newBoards.splice(activeBoardIndex, 1);
     setBoards(newBoards);
-    setActiveBoard(newBoards[0]);
+    setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
   }
 
   function createNewColumnInActiveBoard(columnName) {

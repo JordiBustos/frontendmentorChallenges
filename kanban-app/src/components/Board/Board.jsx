@@ -5,32 +5,66 @@ import { useContext, useState } from "react";
 import "./board.css";
 
 const Board = () => {
-  const { returnActiveColumns, createNewColumnInActiveBoard } =
+  const { returnActiveColumns, createNewColumnInActiveBoard, activeBoard } =
     useContext(BoardContext);
-  const columns = returnActiveColumns();
   const [showModal, setShowModal] = useState(false);
+
+  let columns;
+
+  if (activeBoard !== null) {
+    columns = returnActiveColumns();
+  }
 
   return (
     <section>
-      <div className="board-container">
-        {createColumns(columns, setShowModal)}
-      </div>
-      {showModal && (
-        <BoardModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          onSubmit={(name) => createNewColumnInActiveBoard(name)}
-          isNewBoard={false}
-        />
+      {activeBoard !== null ? (
+        <>
+          <div className="board-container">
+            {createColumns(columns, setShowModal)}
+          </div>
+          {showModal && (
+            <BoardModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+              onSubmit={(name) => createNewColumnInActiveBoard(name)}
+              isNewBoard={false}
+            />
+          )}
+        </>
+      ) : (
+        <h2 className="empty-title">Please create a board</h2>
       )}
     </section>
   );
 };
 
 function createColumns(columns, setShowModal) {
-  const arrOfColumns = columns.map((column) => {
-    return <Column key={column.name} name={column.name} tasks={column.tasks} />;
+  const arrOfColumns = [];
+
+  if (columns?.length === 0 || columns === undefined) {
+    arrOfColumns.push(
+      <Column
+        key="createNewColumn"
+        name={"+ New Column"}
+        tasks={[]}
+        setShowModal={setShowModal}
+      />
+    );
+
+    return (
+      <>
+        <h2 className="empty-title">This Board is empty</h2>
+        {arrOfColumns}
+      </>
+    );
+  }
+
+  columns.forEach((column) => {
+    arrOfColumns.push(
+      <Column key={column.name} name={column.name} tasks={column.tasks} />
+    );
   });
+
   arrOfColumns.push(
     <Column
       key="createNewColumn"
@@ -39,6 +73,7 @@ function createColumns(columns, setShowModal) {
       setShowModal={setShowModal}
     />
   );
+
   return arrOfColumns;
 }
 

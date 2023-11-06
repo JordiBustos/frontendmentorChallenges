@@ -30,7 +30,7 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
           isNewBoard ? "Board Name:" : "Column Name:",
           "textInput",
           inputValue,
-          (e) => handleInputChange(e, setInputValue)
+          setInputValue
         )}
         {validationMessage && <p className="error">{validationMessage}</p>}
 
@@ -62,10 +62,6 @@ function handleSubmit(
     if (response) onClose();
     else setValidationMessage("The name is already in use");
   } else setValidationMessage("Please enter a board name");
-}
-
-function handleInputChange(e, setInputValue) {
-  setInputValue(e.target.value);
 }
 
 export default BoardModal;

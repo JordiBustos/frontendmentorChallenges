@@ -9,3 +9,11 @@
   overflow-y: auto;
   overflow-x: auto;
 }
+
+.empty-title {
+  margin: auto;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+}

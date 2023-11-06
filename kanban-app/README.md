@@ -44,6 +44,4 @@ Want some support on the challenge? [Join our Slack community](https://www.front
 TODO:
 
 - Edit board title and remove columns functionality
-- Handle no boards view
 - Mobile css
-- Disable add task button if no columns
