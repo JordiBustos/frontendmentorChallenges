@@ -6,7 +6,8 @@ import ConfirmDeleteModal from "../Modals/ConfirmDeleteModal";
 import EditBoardModal from "../Modals/EditBoardModal";
 
 const Navbar = () => {
-  const { activeBoard, deleteActiveBoard, editBoard } = useContext(BoardContext);
+  const { activeBoard, deleteActiveBoard, editBoard } =
+    useContext(BoardContext);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditBoardModal, setShowEditBoardModal] = useState(false);
