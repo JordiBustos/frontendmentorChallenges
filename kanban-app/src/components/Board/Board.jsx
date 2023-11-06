@@ -9,11 +9,7 @@ const Board = () => {
     useContext(BoardContext);
   const [showModal, setShowModal] = useState(false);
 
-  let columns;
-
-  if (activeBoard !== null) {
-    columns = returnActiveColumns();
-  }
+  const columns = returnActiveColumns();
 
   return (
     <section>
@@ -39,33 +35,7 @@ const Board = () => {
 };
 
 function createColumns(columns, setShowModal) {
-  const arrOfColumns = [];
-
-  if (columns?.length === 0 || columns === undefined) {
-    arrOfColumns.push(
-      <Column
-        key="createNewColumn"
-        name={"+ New Column"}
-        tasks={[]}
-        setShowModal={setShowModal}
-      />
-    );
-
-    return (
-      <>
-        <h2 className="empty-title">This Board is empty</h2>
-        {arrOfColumns}
-      </>
-    );
-  }
-
-  columns.forEach((column) => {
-    arrOfColumns.push(
-      <Column key={column.name} name={column.name} tasks={column.tasks} />
-    );
-  });
-
-  arrOfColumns.push(
+  const createNewColumn = (
     <Column
       key="createNewColumn"
       name={"+ New Column"}
@@ -73,6 +43,21 @@ function createColumns(columns, setShowModal) {
       setShowModal={setShowModal}
     />
   );
+
+  if (columns?.length === 0 || columns === undefined) {
+    return (
+      <>
+        <h2 className="empty-title">This Board is empty</h2>
+        {createNewColumn}
+      </>
+    );
+  }
+
+  const arrOfColumns = columns.map((column) => {
+    return <Column key={column.name} name={column.name} tasks={column.tasks} />;
+  });
+
+  arrOfColumns.push(createNewColumn);
 
   return arrOfColumns;
 }

@@ -17,7 +17,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function returnActiveColumns() {
-    return activeBoard.columns;
+    return activeBoard?.columns;
   }
 
   function createNewBoard(name) {
