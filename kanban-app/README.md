@@ -44,7 +44,7 @@ Want some support on the challenge? [Join our Slack community](https://www.front
 TODO:
 
 - Mobile css
-- Delete and edit task
+- Edit task
 - Change name to the columns
 - Drag and drop
 - Two cards with same name
