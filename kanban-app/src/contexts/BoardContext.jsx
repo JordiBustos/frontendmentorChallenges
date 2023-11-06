@@ -5,6 +5,8 @@ import data from "../data.json";
 
 const BoardContext = React.createContext();
 
+// as the app isn't big we can keep all the state in this context
+
 const BoardProvider = ({ children }) => {
   const [boards, setBoards] = useState(data.boards);
   const [activeBoard, setActiveBoard] = useState(

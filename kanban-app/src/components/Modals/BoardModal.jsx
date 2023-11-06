@@ -15,16 +15,13 @@ const BoardModal = ({ isOpen, onClose, onSubmit, isNewBoard }) => {
       isBoardModal={true}
     >
       <form
-        onSubmit={(e) =>
-          handleSubmit(
-            e,
-            onSubmit,
-            onClose,
-            inputValue,
-            setValidationMessage,
-            setInputValue
-          )
-        }
+        onSubmit={handleSubmit(
+          onSubmit,
+          onClose,
+          inputValue,
+          setValidationMessage,
+          setInputValue
+        )}
       >
         {createTextInput(
           isNewBoard ? "Board Name" : "Column Name",
@@ -48,20 +45,21 @@ BoardModal.propTypes = {
 };
 
 function handleSubmit(
-  e,
   onSubmit,
   onClose,
   inputValue,
   setValidationMessage,
   setInputValue
 ) {
-  e.preventDefault();
-  if (inputValue !== "") {
-    const response = onSubmit(inputValue);
-    setInputValue("");
-    if (response) onClose();
-    else setValidationMessage("The name is already in use");
-  } else setValidationMessage("Please enter a board name");
+  return (e) => {
+    e.preventDefault();
+    if (inputValue !== "") {
+      const response = onSubmit(inputValue);
+      setInputValue("");
+      if (response) onClose();
+      else setValidationMessage("The name is already in use");
+    } else setValidationMessage("Please enter a board name");
+  };
 }
 
 export default BoardModal;

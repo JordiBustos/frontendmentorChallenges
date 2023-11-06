@@ -8,6 +8,18 @@ function checkIfIsInArray(array, name) {
   );
 }
 
+function validateSubmit(title, inputFields, setValidationMessage) {
+  if (title === "") {
+    setValidationMessage("Title cannot be empty");
+    return false;
+  }
+  if (inputFields.length === 0) {
+    setValidationMessage("Subtasks cannot be empty");
+    return false;
+  }
+  return true;
+}
+
 function returnRandomDescription() {
   const descriptions = [
     "e.g. Debug a critical software issue in the production environment.",
@@ -52,4 +64,4 @@ function returnRandomSubtask() {
   return taskTitles[Math.floor(Math.random() * taskTitles.length)];
 }
 
-export { computeSubtasksCompleted, checkIfIsInArray, returnRandomDescription, returnRandomSubtask };
+export { computeSubtasksCompleted, checkIfIsInArray, returnRandomDescription, returnRandomSubtask, validateSubmit };

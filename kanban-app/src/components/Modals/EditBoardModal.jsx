@@ -1,7 +1,10 @@
 import Modal from "./Modal";
 import PropTypes from "prop-types";
 import { useState, useContext } from "react";
-import { createTextInput } from "../../utils/formUtils";
+import {
+  createTextInput,
+  createColumnsCheckboxes,
+} from "../../utils/formUtils";
 import { BoardContext } from "../../contexts/BoardContext";
 
 const EditBoardModal = ({ isOpen, onClose, onSubmit, boardName }) => {
@@ -10,15 +13,6 @@ const EditBoardModal = ({ isOpen, onClose, onSubmit, boardName }) => {
   const [columnsChecked, setColumnsCheked] = useState([]);
   const { returnActiveColumns } = useContext(BoardContext);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (name === "") {
-      setValidationMessage("Name cannot be empty");
-      return;
-    }
-    onSubmit(name, columnsChecked);
-  }
-
   return (
     <Modal
       isOpen={isOpen}
@@ -26,7 +20,14 @@ const EditBoardModal = ({ isOpen, onClose, onSubmit, boardName }) => {
       title={`Edit ${boardName}`}
       isBoardModal={true}
     >
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form
+        onSubmit={handleSubmit(
+          name,
+          columnsChecked,
+          onSubmit,
+          setValidationMessage
+        )}
+      >
         {createTextInput("Name", "name", name, setName, "Enter new name...")}
         <div>
           <h3>Delete columns</h3>
@@ -47,29 +48,15 @@ EditBoardModal.propTypes = {
   boardName: PropTypes.string.isRequired,
 };
 
-function createColumnsCheckboxes(columns, setColumnsCheked) {
-  return columns.map((column) => {
-    return (
-      <span className="modal-checkbox-container" key={column.name}>
-        <input
-          onChange={(e) => {
-            if (e.target.checked) {
-              setColumnsCheked((prev) => [...prev, e.target.value]);
-            } else {
-              setColumnsCheked((prev) =>
-                prev.filter((column) => column !== e.target.value)
-              );
-            }
-          }}
-          type="checkbox"
-          id={column.name}
-          name={column.name}
-          value={column.name}
-        />
-        <label htmlFor={column.name}>{column.name}</label>
-      </span>
-    );
-  });
+function handleSubmit(name, columnsChecked, onSubmit, setValidationMessage) {
+  return (e) => {
+    e.preventDefault();
+    if (name === "") {
+      setValidationMessage("Name cannot be empty");
+      return;
+    }
+    onSubmit(name, columnsChecked);
+  };
 }
 
 export default EditBoardModal;

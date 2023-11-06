@@ -1,8 +1,16 @@
 import PropTypes from "prop-types";
 import { useState, useContext, useEffect } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
-import { createTextInput, createStatusDropdown } from "../../utils/formUtils";
-import { returnRandomSubtask, returnRandomDescription } from "../../utils/lib";
+import {
+  createTextInput,
+  createStatusDropdown,
+  createNewSubtaskField,
+} from "../../utils/formUtils";
+import {
+  returnRandomSubtask,
+  returnRandomDescription,
+  validateSubmit,
+} from "../../utils/lib";
 import Modal from "./Modal";
 
 const NewTaskModal = ({ isOpen, onClose }) => {
@@ -23,18 +31,15 @@ const NewTaskModal = ({ isOpen, onClose }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!validateSubmit()) {
+    if (!validateSubmit(title, inputFields, setValidationMessage)) {
       return;
     }
-    const newTask = {
+    const newTask = createNewTask(
       title,
       description,
-      subtasks: inputFields.map((subtask) => ({
-        title: subtask,
-        isCompleted: false,
-      })),
-      status: currentStatus,
-    };
+      inputFields,
+      currentStatus
+    );
     createTask(newTask);
     onClose();
   }
@@ -53,18 +58,6 @@ const NewTaskModal = ({ isOpen, onClose }) => {
     const newInputValues = [...inputFields];
     newInputValues[index] = value;
     setInputFields(newInputValues);
-  }
-
-  function validateSubmit() {
-    if (title === "") {
-      setValidationMessage("Title cannot be empty");
-      return false;
-    }
-    if (inputFields.length === 0) {
-      setValidationMessage("Subtasks cannot be empty");
-      return false;
-    }
-    return true;
   }
 
   return (
@@ -110,23 +103,16 @@ NewTaskModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-function createNewSubtaskField(
-  inputFields,
-  handleInputChange,
-  deleteSubtasks,
-  subtaskPlaceholder
-) {
-  return inputFields.map((value, index) => (
-    <div className="subtask-input-container" key={index}>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => handleInputChange(index, e.target.value)}
-        placeholder={subtaskPlaceholder[index]}
-      />
-      <span onClick={(index) => deleteSubtasks(index)}>&times;</span>
-    </div>
-  ));
+function createNewTask(title, description, inputFields, currentStatus) {
+  return {
+    title,
+    description,
+    subtasks: inputFields.map((subtask) => ({
+      title: subtask,
+      isCompleted: false,
+    })),
+    status: currentStatus,
+  };
 }
 
 export default NewTaskModal;
