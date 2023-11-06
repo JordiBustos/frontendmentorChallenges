@@ -6,7 +6,7 @@ import BoardModal from "../Modals/BoardModal";
 
 const Sidebar = () => {
   const { boardNames, activeBoard, createNewBoard } = useContext(BoardContext);
-  const boardNamesLength = boardNames.length;
+  const boardNamesLength = boardNames ? boardNames.length : 0;
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -33,9 +33,18 @@ const Sidebar = () => {
 };
 
 function createBoardLinks(boardNames, activeBoard, setShowModal) {
-  const names = boardNames.map((name) => (
-    <SidebarTitle key={name} name={name} isActive={activeBoard.name === name} />
-  ));
+  const names = [];
+  if (boardNames && boardNames.length > 0) {
+    boardNames.forEach((name) =>
+      names.push(
+        <SidebarTitle
+          key={name}
+          name={name}
+          isActive={activeBoard.name === name}
+        />
+      )
+    );
+  }
   names.push(
     <SidebarTitle
       key="createNewBoard"

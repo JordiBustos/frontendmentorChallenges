@@ -27,27 +27,28 @@ const Navbar = () => {
       <div className="navbar-container">
         <h1>{activeBoard && activeBoard.name}</h1>
         <div>
-          <button
-            onClick={() => setShowEditBoardModal(true)}
-            className="edit-board-button"
-            disabled={activeBoard === null}
-          >
-            Edit Board
-          </button>
-          <button
-            onClick={() => setShowDeleteModal(true)}
-            className="delete-board-button"
-            disabled={activeBoard === null}
-          >
-            Delete Board
-          </button>
-          <button
-            onClick={() => setShowModal(true)}
-            className="new-task-button"
-            disabled={activeBoard === null}
-          >
-            +Add New Task
-          </button>
+          {activeBoard && (
+            <>
+              <button
+                onClick={() => setShowEditBoardModal(true)}
+                className="edit-board-button"
+              >
+                Edit Board
+              </button>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="delete-board-button"
+              >
+                Delete Board
+              </button>
+              <button
+                onClick={() => setShowModal(true)}
+                className="new-task-button"
+              >
+                +Add New Task
+              </button>
+            </>
+          )}
         </div>
       </div>
       {showModal && (
