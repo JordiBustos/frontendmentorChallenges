@@ -12,6 +12,7 @@ const EditBoardModal = ({ isOpen, onClose, onSubmit, boardName }) => {
   const [validationMessage, setValidationMessage] = useState("");
   const [columnsChecked, setColumnsCheked] = useState([]);
   const { returnActiveColumns } = useContext(BoardContext);
+  const activeColumns = returnActiveColumns();
 
   return (
     <Modal
@@ -30,9 +31,15 @@ const EditBoardModal = ({ isOpen, onClose, onSubmit, boardName }) => {
       >
         {createTextInput("Name", "name", name, setName, "Enter new name...")}
         <div>
-          <h3>Delete columns</h3>
-          <p>Selected columns will be deleted with its corresponding tasks.</p>
-          {createColumnsCheckboxes(returnActiveColumns(), setColumnsCheked)}
+          {activeColumns?.length > 0 && (
+            <>
+              <h3>Delete columns</h3>
+              <p>
+                Selected columns will be deleted with its corresponding tasks.
+              </p>
+              {createColumnsCheckboxes(returnActiveColumns(), setColumnsCheked)}
+            </>
+          )}
         </div>
         {validationMessage && <p className="error">{validationMessage}</p>}
         <button type="submit">Submit</button>

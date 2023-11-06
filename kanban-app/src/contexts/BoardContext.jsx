@@ -14,24 +14,24 @@ const BoardProvider = ({ children }) => {
   );
   const boardNames = boards?.map((board) => board.name);
   const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
+  const findBoardByName = (name) => boards.find((board) => board.name === name);
+  const returnActiveColumns = () => activeBoard?.columns;
 
-  function findBoardByName(name) {
-    return boards.find((board) => board.name === name);
-  }
-
-  function returnActiveColumns() {
-    return activeBoard?.columns;
-  }
+  const updateBoardsState = (newBoards) => {
+    setBoards(newBoards);
+    setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
+  };
 
   function createNewBoard(name) {
-    const newBoard = {
-      name,
-      columns: [],
-      isActive: false,
-    };
     if (!checkIfIsInArray(boards, name)) {
-      setBoards([...boards, newBoard]);
-      setActiveBoard(newBoard);
+      updateBoardsState([
+        ...boards,
+        {
+          name,
+          columns: [],
+          isActive: false,
+        },
+      ]);
       return true;
     }
     return false;
@@ -40,8 +40,7 @@ const BoardProvider = ({ children }) => {
   function deleteActiveBoard() {
     const newBoards = [...boards];
     newBoards.splice(activeBoardIndex, 1);
-    setBoards(newBoards);
-    setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
+    updateBoardsState(newBoards);
   }
 
   function createNewColumnInActiveBoard(columnName) {
@@ -101,7 +100,7 @@ const BoardProvider = ({ children }) => {
   }
 
   function createTask(newTask) {
-    const currentColumnIndex = boards[activeBoardIndex].columns.findIndex(
+    const currentColumnIndex = activeBoard.columns.findIndex(
       (column) => column.name === newTask.status
     );
     const newBoard = [...boards];
@@ -120,6 +119,18 @@ const BoardProvider = ({ children }) => {
     setBoards(newBoard);
   }
 
+  function deleteTask(title, status) {
+    const newBoard = [...boards];
+    const columnIndex = newBoard[activeBoardIndex].columns.findIndex(
+      (column) => column.name === status
+    );
+    const taskIndex = newBoard[activeBoardIndex].columns[
+      columnIndex
+    ].tasks.findIndex((task) => task.title === title);
+    newBoard[activeBoardIndex].columns[columnIndex].tasks.splice(taskIndex, 1);
+    setBoards(newBoard);
+  }
+
   return (
     <BoardContext.Provider
       value={{
@@ -127,6 +138,7 @@ const BoardProvider = ({ children }) => {
         setActiveBoard,
         boardNames,
         editBoard,
+        deleteTask,
         returnActiveColumns,
         findBoardByName,
         createNewBoard,

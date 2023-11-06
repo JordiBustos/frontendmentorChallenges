@@ -15,8 +15,13 @@ const TaskModal = ({
 }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   const [currentSubtasks, setCurrentSubtasks] = useState(subtasks);
-  const { returnActiveColumns, updateCardStatusAndSubtasks } =
+  const { returnActiveColumns, updateCardStatusAndSubtasks, deleteTask } =
     useContext(BoardContext);
+
+  function handleDeleteTask() {
+    deleteTask(title, status);
+    onClose();
+  }
 
   return (
     <Modal title={title} isOpen={isOpen} onClose={onClose}>
@@ -47,6 +52,9 @@ const TaskModal = ({
         )}
         <button type="submit">Submit</button>
       </form>
+      <p className="delete-task" onClick={handleDeleteTask}>
+        Delete task
+      </p>
     </Modal>
   );
 };

@@ -154,3 +154,12 @@
 .modal-cancel-button {
   background-color: #6360c7;
 }
+
+.delete-task {
+  color: #c76360;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top:3rem;
+  width: max-content;
+}
