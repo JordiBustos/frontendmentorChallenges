@@ -43,5 +43,4 @@ Want some support on the challenge? [Join our Slack community](https://www.front
 
 TODO:
 
-- Edit board title and remove columns functionality
 - Mobile css

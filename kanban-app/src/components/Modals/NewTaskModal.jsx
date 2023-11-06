@@ -15,6 +15,7 @@ const NewTaskModal = ({ isOpen, onClose }) => {
   );
   const [randomDescription] = useState(returnRandomDescription());
   const [randomSubtask, setRandomSubtask] = useState("");
+  const [validationMessage, setValidationMessage] = useState("");
 
   useEffect(() => {
     setRandomSubtask((prev) => [...prev, returnRandomSubtask()]);
@@ -22,6 +23,9 @@ const NewTaskModal = ({ isOpen, onClose }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!validateSubmit()) {
+      return;
+    }
     const newTask = {
       title,
       description,
@@ -49,6 +53,18 @@ const NewTaskModal = ({ isOpen, onClose }) => {
     const newInputValues = [...inputFields];
     newInputValues[index] = value;
     setInputFields(newInputValues);
+  }
+
+  function validateSubmit() {
+    if (title === "") {
+      setValidationMessage("Title cannot be empty");
+      return false;
+    }
+    if (inputFields.length === 0) {
+      setValidationMessage("Subtasks cannot be empty");
+      return false;
+    }
+    return true;
   }
 
   return (
@@ -82,6 +98,7 @@ const NewTaskModal = ({ isOpen, onClose }) => {
           setCurrentStatus,
           returnActiveColumns()
         )}
+        {validationMessage && <p className="error">{validationMessage}</p>}
         <button type="submit">Create task</button>
       </form>
     </Modal>

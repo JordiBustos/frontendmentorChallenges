@@ -74,4 +74,9 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  width: 100%;
+}
+
+.sidebar__button h3 {
+  word-break: break-all;
 }

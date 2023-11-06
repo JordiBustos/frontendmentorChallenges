@@ -3,15 +3,22 @@ import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
 import NewTaskModal from "../Modals/NewTaskModal";
 import ConfirmDeleteModal from "../Modals/ConfirmDeleteModal";
+import EditBoardModal from "../Modals/EditBoardModal";
 
 const Navbar = () => {
-  const { activeBoard, deleteActiveBoard } = useContext(BoardContext);
+  const { activeBoard, deleteActiveBoard, editBoard } = useContext(BoardContext);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditBoardModal, setShowEditBoardModal] = useState(false);
 
   function onDelete() {
     deleteActiveBoard();
     setShowDeleteModal(false);
+  }
+
+  function onEdit(name, columnsChecked) {
+    editBoard(name, columnsChecked);
+    setShowEditBoardModal(false);
   }
 
   return (
@@ -20,7 +27,7 @@ const Navbar = () => {
         <h1>{activeBoard && activeBoard.name}</h1>
         <div>
           <button
-            onClick={() => setShowModal(true)}
+            onClick={() => setShowEditBoardModal(true)}
             className="edit-board-button"
             disabled={activeBoard === null}
           >
@@ -50,6 +57,14 @@ const Navbar = () => {
           isOpen={showDeleteModal}
           onClose={() => setShowDeleteModal(false)}
           onDelete={onDelete}
+        />
+      )}
+      {showEditBoardModal && (
+        <EditBoardModal
+          isOpen={showEditBoardModal}
+          onClose={() => setShowEditBoardModal(false)}
+          onSubmit={(name, columnsChecked) => onEdit(name, columnsChecked)}
+          boardName={activeBoard.name}
         />
       )}
     </nav>

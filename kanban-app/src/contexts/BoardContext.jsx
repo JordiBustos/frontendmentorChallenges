@@ -11,6 +11,7 @@ const BoardProvider = ({ children }) => {
     boards.length > 0 ? boards[0] : null
   );
   const boardNames = boards?.map((board) => board.name);
+  const activeBoardIndex = findBoardIndex(boards, activeBoard?.name);
 
   function findBoardByName(name) {
     return boards.find((board) => board.name === name);
@@ -35,7 +36,6 @@ const BoardProvider = ({ children }) => {
   }
 
   function deleteActiveBoard() {
-    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
     const newBoards = [...boards];
     newBoards.splice(activeBoardIndex, 1);
     setBoards(newBoards);
@@ -43,8 +43,6 @@ const BoardProvider = ({ children }) => {
   }
 
   function createNewColumnInActiveBoard(columnName) {
-    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
-
     if (activeBoardIndex !== -1) {
       const activeBoardCopy = { ...boards[activeBoardIndex] };
       const newColumn = {
@@ -76,7 +74,6 @@ const BoardProvider = ({ children }) => {
       subtasks: completedSubtasks,
     };
 
-    const activeBoardIndex = findBoardIndex(boards, activeBoard.name);
     const activeColumns = boards[activeBoardIndex].columns;
     const currentColumnIndex = activeColumns.findIndex((column) =>
       column.tasks.some((task) => task.title === cardTitle)
@@ -107,12 +104,25 @@ const BoardProvider = ({ children }) => {
     setBoards(newBoard);
   }
 
+  function editBoard(name, columnsChecked) {
+    const newBoard = [...boards];
+    newBoard[activeBoardIndex].name = name;
+    if (columnsChecked.length > 0) {
+      newBoard[activeBoardIndex].columns = newBoard[
+        activeBoardIndex
+      ].columns.filter((column) => !columnsChecked.includes(column.name));
+    }
+    setBoards(newBoard);
+    setActiveBoard(newBoard[activeBoardIndex]);
+  }
+
   return (
     <BoardContext.Provider
       value={{
         activeBoard,
         setActiveBoard,
         boardNames,
+        editBoard,
         returnActiveColumns,
         findBoardByName,
         createNewBoard,
