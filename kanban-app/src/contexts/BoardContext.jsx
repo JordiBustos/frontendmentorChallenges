@@ -100,12 +100,24 @@ const BoardProvider = ({ children }) => {
   }
 
   function createTask(newTask) {
-    const currentColumnIndex = activeBoard.columns.findIndex(
-      (column) => column.name === newTask.status
-    );
-    const newBoard = [...boards];
-    newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.push(newTask);
-    setBoards(newBoard);
+    // check if there is not another card with the same name
+    if (!activeBoard.columns
+      .flatMap((column) => column.tasks)
+      .some((task) => {
+        if (task.title === newTask.title) {
+          alert("There is already a card with this name");
+          return true;
+        }
+        return false;
+      })){
+        const currentColumnIndex = activeBoard.columns.findIndex(
+          (column) => column.name === newTask.status
+        );
+        const newBoard = [...boards];
+        newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.push(newTask);
+        setBoards(newBoard);
+      }
+    
   }
 
   function editBoard(name, columnsChecked) {
