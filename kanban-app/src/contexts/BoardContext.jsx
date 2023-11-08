@@ -131,22 +131,37 @@ const BoardProvider = ({ children }) => {
       .fold(alert, updateBoardsState);
   }
 
+  const updateEditedBoard = (boards, boardIndex, name, columns) => {
+    const newBoard = [...boards];
+    newBoard[boardIndex].columns = columns;
+    newBoard[boardIndex].name = name;
+    return newBoard;
+  };
+
+  const filterColumnsByNames = (columns, columnNames) =>
+    columns.filter((column) => !columnNames.includes(column.name));
+
   function editBoard(name, columnsChecked) {
-    Right(boards)
+    return Right(boards)
       .map((boards) => boards[activeBoardIndex])
       .map((activeBoard) => activeBoard.columns)
       .map((activeColumns) =>
-        activeColumns.filter((column) => !columnsChecked.includes(column.name))
+        filterColumnsByNames(activeColumns, columnsChecked)
       )
-      .map((filteredColum) => {
-        const newBoard = [...boards];
-        newBoard[activeBoardIndex].columns = filteredColum;
-        newBoard[activeBoardIndex].name = name;
-        return newBoard;
-      })
-      .fold(null, updateBoardsState);
+      .map((filteredColumns) =>
+        updateEditedBoard(boards, activeBoardIndex, name, filteredColumns)
+      )
+      .fold(
+        () => {
+          alert("Something went wrong");
+        },
+        (result) => {
+          updateBoardsState(result);
+        }
+      );
   }
 
+  // delete tasks functionality
   const findColumnIndexByName = (columns, name) =>
     Right(columns.findIndex((column) => column.name === name));
 
