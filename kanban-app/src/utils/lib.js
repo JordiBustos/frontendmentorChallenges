@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 function computeSubtasksCompleted(subtasks) {
   return subtasks.filter((subtask) => subtask.isCompleted).length;
 }
@@ -64,4 +66,18 @@ function returnRandomSubtask() {
   return taskTitles[Math.floor(Math.random() * taskTitles.length)];
 }
 
-export { computeSubtasksCompleted, checkIfIsInArray, returnRandomDescription, returnRandomSubtask, validateSubmit };
+const Right = (x) => ({
+  chain: (f) => f(x),
+  map: (f) => Right(f(x)),
+  fold: (f, g) => g(x),
+  inspect: () => `Right(${x})`,
+});
+
+const Left = (x) => ({
+  chain: (f) => Left(x),
+  map: (f) => Left(x),
+  fold: (f, g) => f(x),
+  inspect: () => `Left(${x})`,
+});
+
+export { computeSubtasksCompleted, checkIfIsInArray, returnRandomDescription, returnRandomSubtask, validateSubmit, Right, Left };

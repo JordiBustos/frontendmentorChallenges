@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { checkIfIsInArray } from "../utils/lib";
+import { checkIfIsInArray, Right, Left } from "../utils/lib";
 import PropTypes from "prop-types";
 import data from "../data.json";
 
@@ -20,18 +19,6 @@ const BoardProvider = ({ children }) => {
     setBoards(newBoards);
     setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
   };
-
-  const Right = (x) => ({
-    map: (f) => Right(f(x)),
-    fold: (f, g) => g(x),
-    inspect: () => `Right(${x})`,
-  });
-
-  const Left = (x) => ({
-    map: (f) => Left(x),
-    fold: (f, g) => f(x),
-    inspect: () => `Left(${x})`,
-  });
 
   function createNewBoard(name) {
     if (!checkIfIsInArray(boards, name)) {
