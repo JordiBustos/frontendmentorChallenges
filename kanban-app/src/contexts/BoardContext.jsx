@@ -71,6 +71,29 @@ const BoardProvider = ({ children }) => {
   }
 
   // edit card
+  function findColumnIndexByTaskTitle(columns, taskTitle) {
+    const idx = columns.findIndex((column) =>
+      column.tasks.some((task) => task.title === taskTitle)
+    );
+    return idx === -1 ? Left("Task not found") : Right(idx);
+  }
+
+  function moveTaskToNewColumn(
+    boards,
+    boardIndex,
+    oldColumnIndex,
+    newColumnIndex,
+    newTask
+  ) {
+    const newBoard = [...boards];
+    const oldColumn = newBoard[boardIndex].columns[oldColumnIndex];
+    oldColumn.tasks = oldColumn.tasks.filter(
+      (task) => task.title !== newTask.title
+    );
+    newBoard[boardIndex].columns[newColumnIndex].tasks.push(newTask);
+    return newBoard;
+  }
+
   function updateCardStatusAndSubtasks(
     cardTitle,
     description,
@@ -84,30 +107,29 @@ const BoardProvider = ({ children }) => {
       subtasks: completedSubtasks,
     };
 
-    Right(boards)
+    return Right(boards)
       .map((boards) => boards[activeBoardIndex])
       .map((activeBoard) => activeBoard.columns)
-      .map((activeColumns) =>
-        activeColumns.findIndex((column) =>
-          column.tasks.some((task) => task.title === cardTitle)
+      .chain((activeColumns) =>
+        findColumnIndexByTaskTitle(activeColumns, cardTitle).map(
+          (oldColumnIndex) =>
+            moveTaskToNewColumn(
+              boards,
+              activeBoardIndex,
+              oldColumnIndex,
+              activeColumns.findIndex((c) => c.name === newStatus),
+              newTask
+            )
         )
       )
-      .map((columnOfTaskIndex) => {
-        const filteredTasks = boards[activeBoardIndex].columns[
-          columnOfTaskIndex
-        ].tasks.filter((task) => task.title !== cardTitle);
-        const newBoard = [...boards];
-        newBoard[activeBoardIndex].columns[columnOfTaskIndex].tasks =
-          filteredTasks;
-        return newBoard;
-      })
-      .map((board) => {
-        board[activeBoardIndex].columns[
-          activeBoard.columns.findIndex((c) => c.name === newStatus)
-        ].tasks.push(newTask);
-        return board;
-      })
-      .fold(null, updateBoardsState);
+      .fold(
+        (error) => {
+          console.error(error);
+        },
+        (result) => {
+          updateBoardsState(result);
+        }
+      );
   }
 
   // create task
@@ -211,7 +233,7 @@ const BoardProvider = ({ children }) => {
         }
       );
   }
-  
+
   return (
     <BoardContext.Provider
       value={{
