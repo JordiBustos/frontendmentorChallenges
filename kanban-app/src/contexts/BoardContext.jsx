@@ -20,6 +20,7 @@ const BoardProvider = ({ children }) => {
     setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
   };
 
+  // create new board
   function createNewBoard(name) {
     if (!checkIfIsInArray(boards, name)) {
       updateBoardsState([
@@ -35,6 +36,7 @@ const BoardProvider = ({ children }) => {
     return false;
   }
 
+  // delete board
   function filterBoard(boards, activeBoard) {
     const newBoards = boards.filter((b) => b.name !== activeBoard.name);
     return boards.length !== 0 ? Right(newBoards) : Left("No boards to delete");
@@ -44,27 +46,31 @@ const BoardProvider = ({ children }) => {
     filterBoard([...boards], activeBoard).fold(alert, updateBoardsState);
   }
 
+  // create new column
   function newColumnHelper(boards, columnName) {
     return !checkIfIsInArray(boards[activeBoardIndex].columns, columnName)
       ? Right(boards)
       : Left("A column with the same name already exists");
   }
 
+  function putColumnInBoard(boards, activeBoardIndex, columnName) {
+    const newBoard = [...boards];
+    newBoard[activeBoardIndex].columns.push({
+      name: columnName,
+      tasks: [],
+    });
+    return newBoard;
+  }
+
   function createNewColumnInActiveBoard(columnName) {
     if (activeBoardIndex !== -1) {
       newColumnHelper(boards, columnName)
-        .map((boards) => {
-          const newBoard = [...boards];
-          newBoard[activeBoardIndex].columns.push({
-            name: columnName,
-            tasks: [],
-          });
-          return newBoard;
-        })
+        .map((boards) => putColumnInBoard(boards, activeBoardIndex, columnName))
         .fold(alert, updateBoardsState);
     }
   }
 
+  // edit card
   function updateCardStatusAndSubtasks(
     cardTitle,
     description,
@@ -104,6 +110,7 @@ const BoardProvider = ({ children }) => {
       .fold(null, updateBoardsState);
   }
 
+  // create task
   function createTaskHelper(newTask, activeBoard) {
     return activeBoard.columns
       .flatMap((column) => column.tasks)
@@ -117,20 +124,27 @@ const BoardProvider = ({ children }) => {
       : Right(activeBoard);
   }
 
+  function findColumnOfTask(columns, newTask) {
+    return columns.findIndex((column) => column.name === newTask.status);
+  }
+
+  function createTaskInBoard(boards, activeBoardIndex, columnIndex, newTask) {
+    const newBoard = [...boards];
+    newBoard[activeBoardIndex].columns[columnIndex].tasks.push(newTask);
+    return newBoard;
+  }
+
   function createTask(newTask) {
     createTaskHelper(newTask, activeBoard)
       .map((activeBoard) => activeBoard.columns)
-      .map((columns) =>
-        columns.findIndex((column) => column.name === newTask.status)
+      .map((columns) => findColumnOfTask(columns, newTask))
+      .map((columnIndex) =>
+        createTaskInBoard(boards, activeBoardIndex, columnIndex, newTask)
       )
-      .map((columnIndex) => {
-        const newBoard = [...boards];
-        newBoard[activeBoardIndex].columns[columnIndex].tasks.push(newTask);
-        return newBoard;
-      })
       .fold(alert, updateBoardsState);
   }
 
+  // edit board
   const updateEditedBoard = (boards, boardIndex, name, columns) => {
     const newBoard = [...boards];
     newBoard[boardIndex].columns = columns;
@@ -161,7 +175,7 @@ const BoardProvider = ({ children }) => {
       );
   }
 
-  // delete tasks functionality
+  // delete tasks
   const findColumnIndexByName = (columns, name) =>
     Right(columns.findIndex((column) => column.name === name));
 
