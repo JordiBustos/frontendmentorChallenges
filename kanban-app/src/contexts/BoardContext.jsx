@@ -1,11 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { checkIfIsInArray } from "../utils/lib";
 import PropTypes from "prop-types";
 import data from "../data.json";
 
 const BoardContext = React.createContext();
-
-// as the app isn't big we can keep all the state in this context
 
 const BoardProvider = ({ children }) => {
   const [boards, setBoards] = useState(data.boards);
@@ -22,6 +21,18 @@ const BoardProvider = ({ children }) => {
     setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
   };
 
+  const Right = (x) => ({
+    map: (f) => Right(f(x)),
+    fold: (f, g) => g(x),
+    inspect: () => `Right(${x})`,
+  });
+
+  const Left = (x) => ({
+    map: (f) => Left(x),
+    fold: (f, g) => f(x),
+    inspect: () => `Left(${x})`,
+  });
+
   function createNewBoard(name) {
     if (!checkIfIsInArray(boards, name)) {
       updateBoardsState([
@@ -37,29 +48,34 @@ const BoardProvider = ({ children }) => {
     return false;
   }
 
+  function filterBoard(boards, activeBoard) {
+    const newBoards = boards.filter((b) => b.name !== activeBoard.name);
+    return boards.length !== 0 ? Right(newBoards) : Left("No boards to delete");
+  }
+
   function deleteActiveBoard() {
-    const newBoards = [...boards];
-    newBoards.splice(activeBoardIndex, 1);
-    updateBoardsState(newBoards);
+    filterBoard([...boards], activeBoard).fold(alert, updateBoardsState);
+  }
+
+  function newColumnHelper(boards, columnName) {
+    return !checkIfIsInArray(boards[activeBoardIndex].columns, columnName)
+      ? Right(boards)
+      : Left("A column with the same name already exists");
   }
 
   function createNewColumnInActiveBoard(columnName) {
     if (activeBoardIndex !== -1) {
-      const activeBoardCopy = { ...boards[activeBoardIndex] };
-      const newColumn = {
-        name: columnName,
-        tasks: [],
-      };
-
-      if (!checkIfIsInArray(activeBoardCopy.columns, columnName)) {
-        activeBoardCopy.columns.push(newColumn);
-        const updatedBoards = [...boards];
-        updatedBoards[activeBoardIndex] = activeBoardCopy;
-        setBoards(updatedBoards);
-        return true;
-      }
+      newColumnHelper(boards, columnName)
+        .map((boards) => {
+          const newBoard = [...boards];
+          newBoard[activeBoardIndex].columns.push({
+            name: columnName,
+            tasks: [],
+          });
+          return newBoard;
+        })
+        .fold(alert, updateBoardsState);
     }
-    return false;
   }
 
   function updateCardStatusAndSubtasks(
@@ -75,72 +91,97 @@ const BoardProvider = ({ children }) => {
       subtasks: completedSubtasks,
     };
 
-    const activeBoard = boards[activeBoardIndex];
-    const activeColumns = activeBoard.columns;
-    const newBoard = [...boards];
-
-    const currentColumnIndex = activeColumns.findIndex((column) =>
-      column.tasks.some((task) => task.title === cardTitle)
-    );
-
-    const currentTaskInColumnIndex = activeColumns[
-      currentColumnIndex
-    ].tasks.findIndex((task) => task.title === cardTitle);
-
-    const newColumnIndex = newStatus
-      ? activeColumns.findIndex((column) => column.name === newStatus)
-      : currentColumnIndex;
-
-    newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.splice(
-      currentTaskInColumnIndex,
-      1
-    );
-    newBoard[activeBoardIndex].columns[newColumnIndex].tasks.push(newTask);
-    setBoards(newBoard);
+    Right(boards)
+      .map((boards) => boards[activeBoardIndex])
+      .map((activeBoard) => activeBoard.columns)
+      .map((activeColumns) =>
+        activeColumns.findIndex((column) =>
+          column.tasks.some((task) => task.title === cardTitle)
+        )
+      )
+      .map((columnOfTaskIndex) => {
+        const filteredTasks = boards[activeBoardIndex].columns[
+          columnOfTaskIndex
+        ].tasks.filter((task) => task.title !== cardTitle);
+        const newBoard = [...boards];
+        newBoard[activeBoardIndex].columns[columnOfTaskIndex].tasks =
+          filteredTasks;
+        return newBoard;
+      })
+      .map((board) => {
+        board[activeBoardIndex].columns[
+          activeBoard.columns.findIndex((c) => c.name === newStatus)
+        ].tasks.push(newTask);
+        return board;
+      })
+      .fold(null, updateBoardsState);
   }
 
-  function createTask(newTask) {
-    // check if there is not another card with the same name
-    if (!activeBoard.columns
+  function createTaskHelper(newTask, activeBoard) {
+    return activeBoard.columns
       .flatMap((column) => column.tasks)
       .some((task) => {
         if (task.title === newTask.title) {
-          alert("There is already a card with this name");
           return true;
         }
         return false;
-      })){
-        const currentColumnIndex = activeBoard.columns.findIndex(
-          (column) => column.name === newTask.status
-        );
+      })
+      ? Left("There is already a card with this name")
+      : Right(activeBoard);
+  }
+
+  function createTask(newTask) {
+    createTaskHelper(newTask, activeBoard)
+      .map((activeBoard) => activeBoard.columns)
+      .map((columns) =>
+        columns.findIndex((column) => column.name === newTask.status)
+      )
+      .map((columnIndex) => {
         const newBoard = [...boards];
-        newBoard[activeBoardIndex].columns[currentColumnIndex].tasks.push(newTask);
-        setBoards(newBoard);
-      }
-    
+        newBoard[activeBoardIndex].columns[columnIndex].tasks.push(newTask);
+        return newBoard;
+      })
+      .fold(alert, updateBoardsState);
   }
 
   function editBoard(name, columnsChecked) {
-    const newBoard = [...boards];
-    newBoard[activeBoardIndex].name = name;
-    if (columnsChecked.length > 0) {
-      newBoard[activeBoardIndex].columns = newBoard[
-        activeBoardIndex
-      ].columns.filter((column) => !columnsChecked.includes(column.name));
-    }
-    setBoards(newBoard);
+    Right(boards)
+      .map((boards) => boards[activeBoardIndex])
+      .map((activeBoard) => activeBoard.columns)
+      .map((activeColumns) =>
+        activeColumns.filter((column) => !columnsChecked.includes(column.name))
+      )
+      .map((filteredColum) => {
+        const newBoard = [...boards];
+        newBoard[activeBoardIndex].columns = filteredColum;
+        newBoard[activeBoardIndex].name = name;
+        return newBoard;
+      })
+      .fold(null, updateBoardsState);
   }
 
   function deleteTask(title, status) {
-    const newBoard = [...boards];
-    const columnIndex = newBoard[activeBoardIndex].columns.findIndex(
-      (column) => column.name === status
-    );
-    const taskIndex = newBoard[activeBoardIndex].columns[
-      columnIndex
-    ].tasks.findIndex((task) => task.title === title);
-    newBoard[activeBoardIndex].columns[columnIndex].tasks.splice(taskIndex, 1);
-    setBoards(newBoard);
+    Right(boards)
+      .map((boards) => boards[activeBoardIndex])
+      .map((activeBoard) => activeBoard.columns)
+      .map((activeColumns) =>
+        activeColumns.findIndex((column) => column.name === status)
+      )
+      .map((columnIndex) => {
+        return [
+          columnIndex,
+          boards[activeBoardIndex].columns[columnIndex].tasks.filter(
+            (task) => task.title !== title
+          ),
+        ];
+      })
+      .map((indexAndFilteredTasks) => {
+        const newBoard = [...boards];
+        newBoard[activeBoardIndex].columns[indexAndFilteredTasks[0]].tasks =
+          indexAndFilteredTasks[1];
+        return newBoard;
+      })
+      .fold(null, updateBoardsState);
   }
 
   return (
