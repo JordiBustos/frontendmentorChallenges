@@ -147,29 +147,38 @@ const BoardProvider = ({ children }) => {
       .fold(null, updateBoardsState);
   }
 
-  function deleteTask(title, status) {
+  const findColumnIndexByName = (columns, name) =>
+    Right(columns.findIndex((column) => column.name === name));
+
+  const updateColumnTasks = (boards, boardIndex, columnIndex, newTasks) => {
+    const newBoards = [...boards];
+    newBoards[boardIndex].columns[columnIndex].tasks = newTasks;
+    return newBoards;
+  };
+
+  const deleteTask = (title, status) =>
     Right(boards)
       .map((boards) => boards[activeBoardIndex])
       .map((activeBoard) => activeBoard.columns)
-      .map((activeColumns) =>
-        activeColumns.findIndex((column) => column.name === status)
-      )
-      .map((columnIndex) => {
-        return [
+      .chain((activeColumns) =>
+        findColumnIndexByName(activeColumns, status).map((columnIndex) => [
           columnIndex,
-          boards[activeBoardIndex].columns[columnIndex].tasks.filter(
+          activeColumns[columnIndex].tasks.filter(
             (task) => task.title !== title
           ),
-        ];
-      })
-      .map((indexAndFilteredTasks) => {
-        const newBoard = [...boards];
-        newBoard[activeBoardIndex].columns[indexAndFilteredTasks[0]].tasks =
-          indexAndFilteredTasks[1];
-        return newBoard;
-      })
-      .fold(null, updateBoardsState);
-  }
+        ])
+      )
+      .map(([columnIndex, newTasks]) =>
+        updateColumnTasks(boards, activeBoardIndex, columnIndex, newTasks)
+      )
+      .fold(
+        () => {
+          alert("Something went wrong");
+        },
+        (result) => {
+          updateBoardsState(result);
+        }
+      );
 
   return (
     <BoardContext.Provider
