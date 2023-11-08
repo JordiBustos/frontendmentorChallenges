@@ -145,15 +145,16 @@ const BoardProvider = ({ children }) => {
   }
 
   // edit board
-  const updateEditedBoard = (boards, boardIndex, name, columns) => {
+  function updateEditedBoard(boards, boardIndex, name, columns) {
     const newBoard = [...boards];
     newBoard[boardIndex].columns = columns;
     newBoard[boardIndex].name = name;
     return newBoard;
-  };
+  }
 
-  const filterColumnsByNames = (columns, columnNames) =>
-    columns.filter((column) => !columnNames.includes(column.name));
+  function filterColumnsByNames(columns, columnNames) {
+    return columns.filter((column) => !columnNames.includes(column.name));
+  }
 
   function editBoard(name, columnsChecked) {
     return Right(boards)
@@ -176,16 +177,17 @@ const BoardProvider = ({ children }) => {
   }
 
   // delete tasks
-  const findColumnIndexByName = (columns, name) =>
-    Right(columns.findIndex((column) => column.name === name));
+  function findColumnIndexByName(columns, name) {
+    return Right(columns.findIndex((column) => column.name === name));
+  }
 
-  const updateColumnTasks = (boards, boardIndex, columnIndex, newTasks) => {
+  function updateColumnTasks(boards, boardIndex, columnIndex, newTasks) {
     const newBoards = [...boards];
     newBoards[boardIndex].columns[columnIndex].tasks = newTasks;
     return newBoards;
-  };
+  }
 
-  const deleteTask = (title, status) =>
+  function deleteTask(title, status) {
     Right(boards)
       .map((boards) => boards[activeBoardIndex])
       .map((activeBoard) => activeBoard.columns)
@@ -208,7 +210,8 @@ const BoardProvider = ({ children }) => {
           updateBoardsState(result);
         }
       );
-
+  }
+  
   return (
     <BoardContext.Provider
       value={{
