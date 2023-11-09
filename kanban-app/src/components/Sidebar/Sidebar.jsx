@@ -3,11 +3,28 @@ import { BoardContext } from "../../contexts/BoardContext";
 import { useState, useContext } from "react";
 import "./sidebar.css";
 import BoardModal from "../Modals/BoardModal";
+import { checkIfIsInArray } from "../../utils/lib";
 
 const Sidebar = () => {
-  const { boardNames, activeBoard, createNewBoard } = useContext(BoardContext);
-  const boardNamesLength = boardNames ? boardNames.length : 0;
+  const { boards, activeBoardIndex, updateBoardsState } = useContext(BoardContext);
+  const boardNamesLength = boards ? boards.length : 0;
+  const boardNames = boards?.map((board) => board.name);
   const [showModal, setShowModal] = useState(false);
+
+  function createNewBoard(name) {
+    if (!checkIfIsInArray(boards, name)) {
+      updateBoardsState([
+        ...boards,
+        {
+          name,
+          columns: [],
+          isActive: false,
+        },
+      ]);
+      return true;
+    }
+    return false;
+  }
 
   return (
     <div className="sidebar">
@@ -19,7 +36,7 @@ const Sidebar = () => {
         />
         <h3 className="sidebar__subtitle">ALL BOARDS ({boardNamesLength})</h3>
       </div>
-      {createBoardLinks(boardNames, activeBoard, setShowModal)}
+      {createBoardLinks(boardNames, boards[activeBoardIndex], setShowModal)}
       {showModal && (
         <BoardModal
           isOpen={showModal}

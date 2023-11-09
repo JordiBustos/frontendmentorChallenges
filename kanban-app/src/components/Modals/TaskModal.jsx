@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
-import { computeSubtasksCompleted } from "../../utils/lib";
+import { computeSubtasksCompleted, Right } from "../../utils/lib";
 import { createStatusDropdown } from "../../utils/formUtils";
 import Modal from "./Modal";
 
@@ -15,8 +15,106 @@ const TaskModal = ({
 }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   const [currentSubtasks, setCurrentSubtasks] = useState(subtasks);
-  const { returnActiveColumns, updateCardStatusAndSubtasks, deleteTask } =
+  const { returnActiveColumns, boards, activeBoardIndex, updateBoardsState } =
     useContext(BoardContext);
+
+  // edit card
+  function findColumnIndexByTaskTitle(columns, taskTitle) {
+    const idx = columns.findIndex((column) =>
+      column.tasks.some((task) => task.title === taskTitle)
+    );
+    return idx === -1 ? Left("Task not found") : Right(idx);
+  }
+
+  function moveTaskToNewColumn(
+    boards,
+    boardIndex,
+    oldColumnIndex,
+    newColumnIndex,
+    newTask
+  ) {
+    const newBoard = [...boards];
+    const oldColumn = newBoard[boardIndex].columns[oldColumnIndex];
+    oldColumn.tasks = oldColumn.tasks.filter(
+      (task) => task.title !== newTask.title
+    );
+    newBoard[boardIndex].columns[newColumnIndex].tasks.push(newTask);
+    return newBoard;
+  }
+
+  function updateCardStatusAndSubtasks(
+    cardTitle,
+    description,
+    completedSubtasks,
+    newStatus
+  ) {
+    const newTask = {
+      title: cardTitle,
+      status: newStatus,
+      description: description,
+      subtasks: completedSubtasks,
+    };
+
+    return Right(boards)
+      .map((boards) => boards[activeBoardIndex])
+      .map((activeBoard) => activeBoard.columns)
+      .chain((activeColumns) =>
+        findColumnIndexByTaskTitle(activeColumns, cardTitle).map(
+          (oldColumnIndex) =>
+            moveTaskToNewColumn(
+              boards,
+              activeBoardIndex,
+              oldColumnIndex,
+              activeColumns.findIndex((c) => c.name === newStatus),
+              newTask
+            )
+        )
+      )
+      .fold(
+        (error) => {
+          console.error(error);
+        },
+        (result) => {
+          updateBoardsState(result);
+        }
+      );
+  }
+
+  // delete tasks
+  function findColumnIndexByName(columns, name) {
+    return Right(columns.findIndex((column) => column.name === name));
+  }
+
+  function updateColumnTasks(boards, boardIndex, columnIndex, newTasks) {
+    const newBoards = [...boards];
+    newBoards[boardIndex].columns[columnIndex].tasks = newTasks;
+    return newBoards;
+  }
+
+  function deleteTask(title, status) {
+    Right(boards)
+      .map((boards) => boards[activeBoardIndex])
+      .map((activeBoard) => activeBoard.columns)
+      .chain((activeColumns) =>
+        findColumnIndexByName(activeColumns, status).map((columnIndex) => [
+          columnIndex,
+          activeColumns[columnIndex].tasks.filter(
+            (task) => task.title !== title
+          ),
+        ])
+      )
+      .map(([columnIndex, newTasks]) =>
+        updateColumnTasks(boards, activeBoardIndex, columnIndex, newTasks)
+      )
+      .fold(
+        () => {
+          alert("Something went wrong");
+        },
+        (result) => {
+          updateBoardsState(result);
+        }
+      );
+  }
 
   function handleDeleteTask() {
     deleteTask(title, status);

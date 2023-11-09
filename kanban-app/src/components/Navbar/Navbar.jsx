@@ -4,9 +4,10 @@ import { BoardContext } from "../../contexts/BoardContext";
 import NewTaskModal from "../Modals/NewTaskModal";
 import ConfirmDeleteModal from "../Modals/ConfirmDeleteModal";
 import EditBoardModal from "../Modals/EditBoardModal";
+import { Right, Left } from "../../utils/lib";
 
 const Navbar = () => {
-  const { activeBoard, deleteActiveBoard, editBoard } =
+  const { boards, activeBoard, editBoard, updateBoardsState, activeBoardIndex } =
     useContext(BoardContext);
   const [showModal, setShowModal] = useState({
     newTask: false,
@@ -14,13 +15,54 @@ const Navbar = () => {
     editBoard: false,
   });
 
+  function filterBoard(boards, activeBoard) {
+    const newBoards = boards.filter((b) => b.name !== activeBoard.name);
+    return boards.length !== 0 ? Right(newBoards) : Left("No boards to delete");
+  }
+
+  function deleteActiveBoard() {
+    filterBoard([...boards], activeBoard).fold(alert, updateBoardsState);
+  }
+
   function onDelete() {
     deleteActiveBoard();
     showOrHideModal(false, "deleteBoard")();
   }
 
+  // edit board
+  function updateEditedBoard(boards, boardIndex, name, columns) {
+    const newBoard = [...boards];
+    newBoard[boardIndex].columns = columns;
+    newBoard[boardIndex].name = name;
+    return newBoard;
+  }
+
+  function filterColumnsByNames(columns, columnNames) {
+    return columns.filter((column) => !columnNames.includes(column.name));
+  }
+
+  function editActiveBoard(name, columnsChecked) {
+    return Right(boards)
+      .map((boards) => boards[activeBoardIndex])
+      .map((activeBoard) => activeBoard.columns)
+      .map((activeColumns) =>
+        filterColumnsByNames(activeColumns, columnsChecked)
+      )
+      .map((filteredColumns) =>
+        updateEditedBoard(boards, activeBoardIndex, name, filteredColumns)
+      )
+      .fold(
+        () => {
+          alert("Something went wrong");
+        },
+        (result) => {
+          updateBoardsState(result);
+        }
+      );
+  }
+
   function onEdit(name, columnsChecked) {
-    editBoard(name, columnsChecked);
+    editActiveBoard(name, columnsChecked);
     showOrHideModal(false, "editBoard")();
   }
 

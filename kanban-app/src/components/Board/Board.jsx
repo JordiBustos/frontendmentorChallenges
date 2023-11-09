@@ -3,17 +3,25 @@ import BoardModal from "../Modals/BoardModal";
 import { BoardContext } from "../../contexts/BoardContext";
 import { useContext, useState } from "react";
 import "./board.css";
+import { checkIfIsInArray, Right, Left } from "../../utils/lib";
+
 
 const Board = () => {
-  const { returnActiveColumns, createNewColumnInActiveBoard, activeBoard } =
-    useContext(BoardContext);
+  const { boards, activeBoardIndex, updateBoardsState } = useContext(BoardContext);
   const [showModal, setShowModal] = useState(false);
+  const columns = boards[activeBoardIndex]?.columns;
 
-  const columns = returnActiveColumns();
+  function createNewColumnInActiveBoard(columnName) {
+    if (activeBoardIndex !== -1) {
+      newColumnHelper(boards, activeBoardIndex, columnName)
+        .map((boards) => putColumnInBoard(boards, activeBoardIndex, columnName))
+        .fold(alert, updateBoardsState);
+    }
+  }
 
   return (
     <section>
-      {activeBoard !== null ? (
+      {boards[activeBoardIndex] !== null ? (
         <>
           <div className="board-container">
             {createColumns(columns, setShowModal)}
@@ -56,10 +64,24 @@ function createColumns(columns, setShowModal) {
   const arrOfColumns = columns.map((column) => {
     return <Column key={column.name} name={column.name} tasks={column.tasks} />;
   });
-
   arrOfColumns.push(createNewColumn);
-
   return arrOfColumns;
+}
+
+// create new column
+function newColumnHelper(boards, activeBoardIndex, columnName) {
+  return !checkIfIsInArray(boards[activeBoardIndex].columns, columnName)
+    ? Right(boards)
+    : Left("A column with the same name already exists");
+}
+
+function putColumnInBoard(boards, activeBoardIndex, columnName) {
+  const newBoard = [...boards];
+  newBoard[activeBoardIndex].columns.push({
+    name: columnName,
+    tasks: [],
+  });
+  return newBoard;
 }
 
 export default Board;
