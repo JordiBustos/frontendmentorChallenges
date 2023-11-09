@@ -24,34 +24,6 @@ const NewTaskModal = ({ isOpen, onClose }) => {
     updateBoardsState,
   } = useContext(BoardContext);
 
-  function createTaskHelper(newTask, activeBoard) {
-    return activeBoard.columns
-      .flatMap((column) => column.tasks)
-      .some((task) => task.title === newTask.title)
-      ? Left("There is already a card with this name")
-      : Right(activeBoard);
-  }
-
-  function findColumnOfTask(columns, newTask) {
-    return columns.findIndex((column) => column.name === newTask.status);
-  }
-
-  function createTaskInBoard(boards, activeBoardIndex, columnIndex, newTask) {
-    const newBoard = [...boards];
-    newBoard[activeBoardIndex].columns[columnIndex].tasks.push(newTask);
-    return newBoard;
-  }
-
-  function createTask(newTask) {
-    createTaskHelper(newTask, activeBoard)
-      .map((activeBoard) => activeBoard.columns)
-      .map((columns) => findColumnOfTask(columns, newTask))
-      .map((columnIndex) =>
-        createTaskInBoard(boards, activeBoardIndex, columnIndex, newTask)
-      )
-      .fold(alert, updateBoardsState);
-  }
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [inputFields, setInputFields] = useState([""]);
@@ -65,6 +37,16 @@ const NewTaskModal = ({ isOpen, onClose }) => {
 
   function updateRandomSubtask() {
     setRandomSubtask((prev) => [...prev, returnRandomSubtask()]);
+  }
+
+  function createTask(newTask) {
+    createTaskHelper(newTask, activeBoard)
+      .map((activeBoard) => activeBoard.columns)
+      .map((columns) => findColumnOfTask(columns, newTask))
+      .map((columnIndex) =>
+        createTaskInBoard(boards, activeBoardIndex, columnIndex, newTask)
+      )
+      .fold(alert, updateBoardsState);
   }
 
   function handleSubmit(e) {
@@ -153,6 +135,24 @@ function createNewTask(title, description, inputFields, currentStatus) {
     })),
     status: currentStatus,
   };
+}
+
+function createTaskHelper(newTask, activeBoard) {
+  return activeBoard.columns
+    .flatMap((column) => column.tasks)
+    .some((task) => task.title === newTask.title)
+    ? Left("There is already a card with this name")
+    : Right(activeBoard);
+}
+
+function findColumnOfTask(columns, newTask) {
+  return columns.findIndex((column) => column.name === newTask.status);
+}
+
+function createTaskInBoard(boards, activeBoardIndex, columnIndex, newTask) {
+  const newBoard = [...boards];
+  newBoard[activeBoardIndex].columns[columnIndex].tasks.push(newTask);
+  return newBoard;
 }
 
 export default NewTaskModal;
