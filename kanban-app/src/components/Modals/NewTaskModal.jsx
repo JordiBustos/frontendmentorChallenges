@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
 import {
   createTextInput,
@@ -24,12 +24,12 @@ const NewTaskModal = ({ isOpen, onClose }) => {
   );
 
   const [randomDescription] = useState(returnRandomDescription());
-  const [randomSubtask, setRandomSubtask] = useState("");
+  const [randomSubtask, setRandomSubtask] = useState([returnRandomSubtask()]);
   const [validationMessage, setValidationMessage] = useState("");
 
-  useEffect(() => {
+  function updateRandomSubtask() {
     setRandomSubtask((prev) => [...prev, returnRandomSubtask()]);
-  }, [inputFields]);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -42,13 +42,14 @@ const NewTaskModal = ({ isOpen, onClose }) => {
       inputFields,
       currentStatus
     );
-    
+
     createTask(newTask);
     onClose();
   }
 
   function addInputField() {
     setInputFields([...inputFields, ""]);
+    updateRandomSubtask();
   }
 
   function deleteSubtasks(index) {
