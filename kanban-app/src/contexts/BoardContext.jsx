@@ -16,9 +16,18 @@ const BoardProvider = ({ children }) => {
   const findBoardByName = (name) => boards.find((board) => board.name === name);
   const returnActiveColumns = () => activeBoard?.columns;
 
+  function updateActiveBoard(newBoard, activeBoardIndex) {
+    if (newBoard.length === boards.length) return activeBoardIndex;
+    if (newBoard.length === 0) return null;
+    if (activeBoardIndex === newBoard.length -1) return newBoard.length-1;
+    else if (activeBoardIndex > 0) return activeBoardIndex-1;
+    else return 0;
+  }
+
   const updateBoardsState = (newBoards) => {
     setBoards(newBoards);
-    setActiveBoard(newBoards?.length > 0 ? newBoards[0] : null);
+    const newActiveBoardIndex = updateActiveBoard(newBoards, activeBoardIndex);
+    setActiveBoard(newBoards[newActiveBoardIndex]);
   };
 
   return (
