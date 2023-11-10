@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState, useContext } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
-import { computeSubtasksCompleted, Right } from "../../utils/lib";
+import { computeSubtasksCompleted, Right, Left } from "../../utils/lib";
 import { createStatusDropdown } from "../../utils/formUtils";
 import Modal from "./Modal";
 
@@ -19,29 +19,6 @@ const TaskModal = ({
     useContext(BoardContext);
 
   // edit card
-  function findColumnIndexByTaskTitle(columns, taskTitle) {
-    const idx = columns.findIndex((column) =>
-      column.tasks.some((task) => task.title === taskTitle)
-    );
-    return idx === -1 ? Left("Task not found") : Right(idx);
-  }
-
-  function moveTaskToNewColumn(
-    boards,
-    boardIndex,
-    oldColumnIndex,
-    newColumnIndex,
-    newTask
-  ) {
-    const newBoard = [...boards];
-    const oldColumn = newBoard[boardIndex].columns[oldColumnIndex];
-    oldColumn.tasks = oldColumn.tasks.filter(
-      (task) => task.title !== newTask.title
-    );
-    newBoard[boardIndex].columns[newColumnIndex].tasks.push(newTask);
-    return newBoard;
-  }
-
   function updateCardStatusAndSubtasks(
     cardTitle,
     description,
@@ -81,16 +58,6 @@ const TaskModal = ({
   }
 
   // delete tasks
-  function findColumnIndexByName(columns, name) {
-    return Right(columns.findIndex((column) => column.name === name));
-  }
-
-  function updateColumnTasks(boards, boardIndex, columnIndex, newTasks) {
-    const newBoards = [...boards];
-    newBoards[boardIndex].columns[columnIndex].tasks = newTasks;
-    return newBoards;
-  }
-
   function deleteTask(title, status) {
     Right(boards)
       .map((boards) => boards[activeBoardIndex])
@@ -199,6 +166,39 @@ function createSubtasksCheckboxes(
       </div>
     );
   });
+}
+
+function findColumnIndexByTaskTitle(columns, taskTitle) {
+  const idx = columns.findIndex((column) =>
+    column.tasks.some((task) => task.title === taskTitle)
+  );
+  return idx === -1 ? Left("Task not found") : Right(idx);
+}
+
+function moveTaskToNewColumn(
+  boards,
+  boardIndex,
+  oldColumnIndex,
+  newColumnIndex,
+  newTask
+) {
+  const newBoard = [...boards];
+  const oldColumn = newBoard[boardIndex].columns[oldColumnIndex];
+  oldColumn.tasks = oldColumn.tasks.filter(
+    (task) => task.title !== newTask.title
+  );
+  newBoard[boardIndex].columns[newColumnIndex].tasks.push(newTask);
+  return newBoard;
+}
+
+function findColumnIndexByName(columns, name) {
+  return Right(columns.findIndex((column) => column.name === name));
+}
+
+function updateColumnTasks(boards, boardIndex, columnIndex, newTasks) {
+  const newBoards = [...boards];
+  newBoards[boardIndex].columns[columnIndex].tasks = newTasks;
+  return newBoards;
 }
 
 function computeCompletedOutOfTotal(subtasks) {

@@ -7,7 +7,7 @@ import EditBoardModal from "../Modals/EditBoardModal";
 import { Right, Left } from "../../utils/lib";
 
 const Navbar = () => {
-  const { boards, activeBoard, editBoard, updateBoardsState, activeBoardIndex } =
+  const { boards, activeBoard, updateBoardsState, activeBoardIndex } =
     useContext(BoardContext);
   const [showModal, setShowModal] = useState({
     newTask: false,
