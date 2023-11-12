@@ -1,0 +1,98 @@
+#root {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.nav-left {
+  display: flex;
+  flex-direction: column;
+}
+h1 {
+  margin: 0;
+}
+nav select {
+  background-color: #141625;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
+.new-invoice-button {
+  background-color: #7c5df9;
+  border-radius: 50px;
+  padding: 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.plus-icon {
+  background-color: white;
+  color: #7c5df9;
+  padding: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.invoice-container {
+  background-color: #1f213a;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 100%;
+}
+.invoice-container li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.invoice-id {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.id-hashtag {
+  color: #999bb4;
+}
+.invoice-date {
+  color: #999bb4;
+  font-weight: 400;
+}
+.invoice-name {
+  color: #999bb4;
+}
+.invoice-total {
+  color: white;
+  font-weight: bold;
+  font-size: 2rem;
+}
+.invoice-status {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  flex-basis: 20%;
+}
+.paid {
+  background-color: #12333a6e;
+  color: #37ad8d;
+}
+.pending {
+  background-color: #bd7b3060;
+  color: #d38d3b;
+}
+.draft {
+  background-color: #373b53;
+  color: white;
+}
